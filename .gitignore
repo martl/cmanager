@@ -1,10 +1,29 @@
 .gradle
 build
-bin
-src/cmanager/okapi/ConsumerKeys.java
-src/cmanager/global/Version.java
-test/cmanager/okapi/helper/TestClientCredentials.java
+
+# Ignore Gradle GUI config
+gradle-app.setting
+
+# Avoid ignoring Gradle wrapper jar file (.jar files are usually ignored)
+!gradle-wrapper.jar
+
+# Cache of project
+.gradletasknamecache
+
+# Local IDEA settings
+.idea
+
+# IDEA project files
+*.iml
+
+# Some project specific files
+src/main/java/cmanager/okapi/ConsumerKeys.java
+src/main/java/cmanager/global/Version.java
+src/test/java/cmanager/okapi/helper/TestClientCredentials.java
 /oc_okapi.properties
+
 .settings
 .classpath
 .project
+
+Thumbs.db

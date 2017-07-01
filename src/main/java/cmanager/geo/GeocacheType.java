@@ -30,6 +30,7 @@ public class GeocacheType implements Serializable
         TYPE.add("CITO", "Cache In Trash Out Event", null);
         TYPE.add("Wherigo", "Wherigo Cache", null);
         TYPE.add("GPS AE", "GPS Adventures Exhibit", null);
+        TYPE.add("Project Ape", "Project Ape Cache", null);
     }
 
     public static GeocacheType getTradiType()

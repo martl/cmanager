@@ -11,7 +11,9 @@ public class Updates
 
     public static synchronized boolean updateAvailable_block()
     {
-        if (updateAvailable == null)
+        updateAvailable = false;
+        
+        /*if (updateAvailable == null)
         {
             try
             {
@@ -30,7 +32,7 @@ public class Updates
                 // Errors might be due to missing internet connection.
                 updateAvailable = false;
             }
-        }
+        }*/
 
         return updateAvailable;
     }
