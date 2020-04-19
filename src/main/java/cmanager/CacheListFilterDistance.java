@@ -18,7 +18,7 @@ public class CacheListFilterDistance extends CacheListFilterModel
             @Override
             public void run()
             {
-                maxDistance = new Double(textField.getText());
+                maxDistance = Double.valueOf(textField.getText());
             }
         };
     }

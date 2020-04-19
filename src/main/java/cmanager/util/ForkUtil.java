@@ -66,7 +66,7 @@ public class ForkUtil
         Integer heapSizeI = null;
         try
         {
-            heapSizeI = new Integer(heapSizeS);
+            heapSizeI = Integer.valueOf(heapSizeS);
         }
         catch (Throwable t)
         {

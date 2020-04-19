@@ -119,8 +119,8 @@ public class LocationDialog extends JDialog
                     for (int i = 0; i < dtm.getRowCount(); i++)
                     {
                         Location l = new Location((String)table.getValueAt(i, 0),
-                                                  new Double((String)table.getValueAt(i, 1)),
-                                                  new Double((String)table.getValueAt(i, 2)));
+                                                  Double.valueOf((String)table.getValueAt(i, 1)),
+                                                  Double.valueOf((String)table.getValueAt(i, 2)));
                         locations.add(l);
                     }
 
@@ -236,8 +236,8 @@ public class LocationDialog extends JDialog
 
                 try
                 {
-                    new Location(txtName.getText(), new Double(txtLat.getText()),
-                                 new Double(txtLon.getText()));
+                    new Location(txtName.getText(), Double.valueOf(txtLat.getText()),
+                                 Double.valueOf(txtLon.getText()));
                 }
                 catch (Throwable t)
                 {
@@ -259,8 +259,8 @@ public class LocationDialog extends JDialog
             {
                 try
                 {
-                    new Location(txtName.getText(), new Double(txtLat.getText()),
-                                 new Double(txtLon.getText()));
+                    new Location(txtName.getText(), Double.valueOf(txtLat.getText()),
+                                 Double.valueOf(txtLon.getText()));
                 }
                 catch (Throwable t)
                 {

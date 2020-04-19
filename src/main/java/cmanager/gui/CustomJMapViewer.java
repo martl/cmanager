@@ -5,9 +5,14 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.geom.Rectangle2D;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.openstreetmap.gui.jmapviewer.JMapViewer;
+import org.openstreetmap.gui.jmapviewer.OsmTileLoader;
 import org.openstreetmap.gui.jmapviewer.interfaces.TileCache;
+
+import cmanager.global.Constants;
 
 
 public class CustomJMapViewer extends JMapViewer
@@ -21,6 +26,10 @@ public class CustomJMapViewer extends JMapViewer
     public CustomJMapViewer(TileCache cache)
     {
         super(cache);
+
+        Map<String, String> headers = new HashMap<>();
+        headers.put("User-Agent", Constants.HTTP_USER_AGENT);
+        super.setTileLoader(new OsmTileLoader(this, headers));
     }
 
 

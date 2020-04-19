@@ -20,7 +20,7 @@ public class Coordinate implements Serializable
 
     public Coordinate(String lat, String lon)
     {
-        this(new Double(lat), new Double(lon));
+        this(Double.valueOf(lat), Double.valueOf(lon));
     }
 
     public Coordinate(String input) throws UnparsableException
@@ -34,8 +34,8 @@ public class Coordinate implements Serializable
             throw new UnparsableException();
         }
 
-        lat = new Double(matcher.group(1)) + new Double(matcher.group(2)) / 60;
-        lon = new Double(matcher.group(3)) + new Double(matcher.group(4)) / 60;
+        lat = Double.valueOf(matcher.group(1)) + Double.valueOf(matcher.group(2)) / 60;
+        lon = Double.valueOf(matcher.group(3)) + Double.valueOf(matcher.group(4)) / 60;
 
         if (matcher.find())
         {
@@ -66,7 +66,7 @@ public class Coordinate implements Serializable
 
     public String toString()
     {
-        return new Double(lat).toString() + ", " + new Double(lon).toString();
+        return Double.valueOf(lat).toString() + ", " + Double.valueOf(lon).toString();
     }
 
     public double distanceHaversine(Coordinate other)
@@ -99,7 +99,7 @@ public class Coordinate implements Serializable
         if (places < 0)
             throw new IllegalArgumentException();
 
-        BigDecimal bd = new BigDecimal(value);
+        BigDecimal bd = BigDecimal.valueOf(value);
         bd = bd.setScale(places, RoundingMode.HALF_UP);
         return bd.doubleValue();
     }

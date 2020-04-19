@@ -93,7 +93,7 @@ public class MainWindow extends JFrame
 
         JMenuItem mntmOpen = new JMenuItem("Open");
         mntmOpen.setAccelerator(
-            KeyStroke.getKeyStroke('O', Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
+            KeyStroke.getKeyStroke('O', Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx()));
         mntmOpen.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent arg0)
             {
@@ -103,7 +103,7 @@ public class MainWindow extends JFrame
 
         JMenuItem mntmNew = new JMenuItem("New");
         mntmNew.setAccelerator(
-            KeyStroke.getKeyStroke('N', Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
+            KeyStroke.getKeyStroke('N', Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx()));
         mntmNew.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e)
             {
@@ -147,7 +147,7 @@ public class MainWindow extends JFrame
 
         final JMenuItem mntmSave = new JMenuItem("Save");
         mntmSave.setAccelerator(
-            KeyStroke.getKeyStroke('S', Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
+            KeyStroke.getKeyStroke('S', Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx()));
         mntmSave.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent arg0)
             {
@@ -231,7 +231,7 @@ public class MainWindow extends JFrame
 
         JMenuItem mntmCopy = new JMenuItem("Copy");
         mntmCopy.setAccelerator(
-            KeyStroke.getKeyStroke('C', Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
+            KeyStroke.getKeyStroke('C', Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx()));
         mntmCopy.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent arg0)
             {
@@ -241,7 +241,7 @@ public class MainWindow extends JFrame
 
         JMenuItem mntmSelectAll = new JMenuItem("Select All / none");
         mntmSelectAll.setAccelerator(
-            KeyStroke.getKeyStroke('A', Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
+            KeyStroke.getKeyStroke('A', Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx()));
         mntmSelectAll.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e)
             {
@@ -254,7 +254,7 @@ public class MainWindow extends JFrame
 
         JMenuItem mntInvertSelection = new JMenuItem("Invert Selection");
         mntInvertSelection.setAccelerator(
-            KeyStroke.getKeyStroke('I', Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
+            KeyStroke.getKeyStroke('I', Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx()));
         mntInvertSelection.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e)
             {
@@ -271,7 +271,7 @@ public class MainWindow extends JFrame
 
         JMenuItem mntmPaste = new JMenuItem("Paste");
         mntmPaste.setAccelerator(
-            KeyStroke.getKeyStroke('V', Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
+            KeyStroke.getKeyStroke('V', Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx()));
         mntmPaste.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e)
             {
@@ -281,7 +281,7 @@ public class MainWindow extends JFrame
 
         JMenuItem mntmCut = new JMenuItem("Cut");
         mntmCut.setAccelerator(
-            KeyStroke.getKeyStroke('X', Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
+            KeyStroke.getKeyStroke('X', Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx()));
         mntmCut.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e)
             {
@@ -293,7 +293,7 @@ public class MainWindow extends JFrame
 
         final JMenuItem mntmDeleteSelectedCaches = new JMenuItem("Delete");
         mntmDeleteSelectedCaches.setAccelerator(
-            KeyStroke.getKeyStroke('D', Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
+            KeyStroke.getKeyStroke('D', Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx()));
         mntmDeleteSelectedCaches.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent arg0)
             {
@@ -307,7 +307,7 @@ public class MainWindow extends JFrame
 
         final JMenuItem mntmUndoAction = new JMenuItem("Undo");
         mntmUndoAction.setAccelerator(
-            KeyStroke.getKeyStroke('Z', Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
+            KeyStroke.getKeyStroke('Z', Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx()));
         mntmUndoAction.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent arg0)
             {

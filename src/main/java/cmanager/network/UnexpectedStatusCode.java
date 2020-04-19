@@ -9,7 +9,7 @@ public class UnexpectedStatusCode extends Exception
 
     public UnexpectedStatusCode(int statusCode, String body)
     {
-        super("Unexpected status code " + new Integer(statusCode).toString());
+        super("Unexpected status code " + Integer.valueOf(statusCode).toString());
         this.statusCode = statusCode;
         this.body = body;
     }

@@ -2,7 +2,7 @@ package cmanager.xml;
 
 import java.util.ArrayList;
 
-import org.apache.commons.lang3.StringEscapeUtils;
+import org.apache.commons.text.StringEscapeUtils;
 
 public class Element
 {
@@ -111,17 +111,17 @@ public class Element
 
     public Double getBodyD()
     {
-        return new Double(body);
+        return Double.valueOf(body);
     }
 
     public Integer getBodyI()
     {
-        return new Integer(body);
+        return Integer.valueOf(body);
     }
 
     public Boolean getBodyB()
     {
-        return new Boolean(body);
+        return Boolean.valueOf(body);
     }
 
 
@@ -187,12 +187,12 @@ public class Element
 
         public Double getValueD()
         {
-            return new Double(value);
+            return Double.valueOf(value);
         }
 
         public Integer getValueI()
         {
-            return new Integer(value);
+            return Integer.valueOf(value);
         }
     }
 }

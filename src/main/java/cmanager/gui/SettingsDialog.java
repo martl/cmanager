@@ -244,7 +244,7 @@ public class SettingsDialog extends JDialog
         gbc_lblCurrentHeapSize.gridy = 1;
         panelGeneral.add(lblCurrentHeapSize, gbc_lblCurrentHeapSize);
         lblCurrentHeapSize.setText(
-            new Long(Runtime.getRuntime().maxMemory() / 1024 / 1024).toString());
+            Long.valueOf(Runtime.getRuntime().maxMemory() / 1024 / 1024).toString());
 
         Component verticalStrut = Box.createVerticalStrut(20);
         GridBagConstraints gbc_verticalStrut = new GridBagConstraints();

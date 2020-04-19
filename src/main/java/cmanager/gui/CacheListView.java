@@ -169,7 +169,7 @@ public class CacheListView extends JInternalFrame
                     if (g == null)
                         return;
 
-                    if (e.getClickCount() == 1 && ((e.getModifiers() & InputEvent.CTRL_MASK) != 0))
+                    if (e.getClickCount() == 1 && ((e.getModifiersEx() & InputEvent.CTRL_DOWN_MASK) != 0))
                         DesktopUtil.openUrl(g.getURL());
                     else if (e.getClickCount() == 1)
                         panelCache.setCache(g);
@@ -291,7 +291,7 @@ public class CacheListView extends JInternalFrame
                 }
                 else
                 {
-                    lblSelected.setText(new Integer(selected).toString());
+                    lblSelected.setText(Integer.valueOf(selected).toString());
                     panelSelected.setVisible(true);
                 }
             }
@@ -365,27 +365,27 @@ public class CacheListView extends JInternalFrame
         table.getInputMap(JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT)
             .getParent()
             .remove(
-                KeyStroke.getKeyStroke('C', Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
+                KeyStroke.getKeyStroke('C', Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx()));
         table.getInputMap(JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT)
             .getParent()
             .remove(
-                KeyStroke.getKeyStroke('V', Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
+                KeyStroke.getKeyStroke('V', Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx()));
         table.getInputMap(JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT)
             .getParent()
             .remove(
-                KeyStroke.getKeyStroke('X', Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
+                KeyStroke.getKeyStroke('X', Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx()));
         table.getInputMap(JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT)
             .getParent()
             .remove(
-                KeyStroke.getKeyStroke('A', Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
+                KeyStroke.getKeyStroke('A', Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx()));
         table.getInputMap(JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT)
             .getParent()
             .remove(
-                KeyStroke.getKeyStroke('I', Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
+                KeyStroke.getKeyStroke('I', Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx()));
         table.getInputMap(JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT)
             .getParent()
             .remove(
-                KeyStroke.getKeyStroke('Z', Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
+                KeyStroke.getKeyStroke('Z', Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx()));
 
 
         //		tglbtnCache.doClick();

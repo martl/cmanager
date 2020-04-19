@@ -187,16 +187,16 @@ public class GPX
                     {
                         try
                         {
-                            id = new Integer(a.getValue());
+                            id = Integer.valueOf(a.getValue());
                         }
                         catch (Exception ex)
                         {
                         }
                     }
                     if (a.is("archived"))
-                        archived = new Boolean(a.getValue());
+                        archived = Boolean.valueOf(a.getValue());
                     else if (a.is("available"))
-                        available = new Boolean(a.getValue());
+                        available = Boolean.valueOf(a.getValue());
                 }
 
                 for (Element ee : e.getChildren())
