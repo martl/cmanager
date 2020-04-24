@@ -47,4 +47,4 @@ Run `gradle run` (or `./gradlew run`) from the root directory of the Git reposit
 
 ### Starting the application JAR file
 
-Run `java -jar cmanager-0.2.45.jar` from the directory containing the JAR file.
+Run `java -jar cm-0.2.45.jar` from the directory containing the JAR file.
