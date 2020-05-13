@@ -80,7 +80,6 @@ public class FileHelper
 
     private static void processZipFile(InputStream is, FileHelper.InputAction ia) throws Throwable
     {
-
         // get the zip file content
         ZipInputStream zis = new ZipInputStream(is);
         // get the zipped file list entry

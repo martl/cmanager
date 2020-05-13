@@ -55,7 +55,10 @@ public class ShadowList
     public static ShadowList loadShadowList() throws Throwable
     {
         final HashMap<String, String> shadowList = new HashMap<>();
-        FileHelper.processFiles(SHADOWLIST_PATH, new InputAction() {
+
+        System.out.println("Shadow list retrieval disabled as the API endpoint seems to be broken for now.");
+        // TODO: Enable after the GZip archive is valid again.
+        /*FileHelper.processFiles(SHADOWLIST_PATH, new InputAction() {
             @Override
             public void process(InputStream is) throws Throwable
             {
@@ -72,7 +75,8 @@ public class ShadowList
                     }
                 }
             }
-        });
+        });*/
+
         return new ShadowList(shadowList);
     }
 

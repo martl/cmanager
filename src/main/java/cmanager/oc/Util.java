@@ -92,13 +92,13 @@ public class Util
                         ArrayList<Geocache> similar =
                             OKAPI.getCachesAround(user, uuid, gc, searchRadius, okapiRuntimeCache);
                         boolean match = false;
-                        for (Geocache oc : similar)
-                            if (GeocacheComparator.similar(oc, gc))
-                            {
+                        for (Geocache oc : similar) {
+                            if (GeocacheComparator.similar(oc, gc)) {
                                 OKAPI.completeCacheDetails(oc);
                                 oi.match(gc, oc);
                                 match = true;
                             }
+                        }
 
                         if (!match)
                             SearchCache.setEmptySearch(gc, uuid);
