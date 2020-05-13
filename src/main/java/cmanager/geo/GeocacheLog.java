@@ -56,6 +56,7 @@ public class GeocacheLog implements Serializable
     private String author;
     private String text;
     private DateTime date;
+    private String password;
 
     public GeocacheLog(String type, String author, String text, String date)
     {
@@ -67,6 +68,19 @@ public class GeocacheLog implements Serializable
 
         this.author = author;
         this.text = text;
+        this.password = "";
+    }
+
+    public GeocacheLog(String type, String author, String text, String date, String password) {
+        setType(type);
+        setDate(date);
+
+        if (author == null || text == null)
+            throw new NullPointerException();
+
+        this.author = author;
+        this.text = text;
+        this.password = password;
     }
 
     public void setDate(String date)
@@ -128,6 +142,10 @@ public class GeocacheLog implements Serializable
     public String getDateStrISO8601NoTime()
     {
         return getDateStrISO8601NoTime(date);
+    }
+
+    public String getPassword() {
+        return password;
     }
 
     public boolean equals(GeocacheLog log)

@@ -25,6 +25,7 @@ public class Geocache implements Serializable, Comparable<String>
     private String listing = null;
     private String listing_short = null;
     private String hint = null;
+    private Boolean requiresPassword = null;
 
     private Boolean archived = null;
     private Boolean available = null;
@@ -354,5 +355,13 @@ public class Geocache implements Serializable, Comparable<String>
     public int compareTo(String s)
     {
         return code.compareTo(s);
+    }
+
+    public void setRequiresPassword(Boolean requiresPassword) {
+        this.requiresPassword = requiresPassword;
+    }
+
+    public Boolean doesRequirePassword() {
+        return requiresPassword;
     }
 }

@@ -15,6 +15,7 @@ public class CacheDetailsDocument
     String short_description;
     String description;
     String hint2;
+    Boolean req_passwd;
 
     public String getOwnerUuid()
     {
@@ -48,5 +49,9 @@ public class CacheDetailsDocument
     public String getHint2()
     {
         return hint2;
+    }
+
+    public Boolean doesRequirePassword() {
+        return req_passwd;
     }
 }

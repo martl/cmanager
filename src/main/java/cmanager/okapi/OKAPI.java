@@ -30,6 +30,7 @@ import cmanager.okapi.responses.CacheDocument;
 import cmanager.okapi.responses.CachesAroundDocument;
 import cmanager.okapi.responses.ErrorDocument;
 import cmanager.okapi.responses.FoundStatusDocument;
+import cmanager.okapi.responses.LogSubmissionDocument;
 import cmanager.okapi.responses.UUIDDocument;
 import cmanager.okapi.responses.UsernameDocument;
 import cmanager.xml.Element;
@@ -161,7 +162,7 @@ public class OKAPI
         final String url =
             "https://www.opencaching.de/okapi/services/caches/geocache"
             + "?consumer_key=" + CONSUMER_API_KEY + "&cache_code=" + g.getCode() + "&fields=" +
-            URLEncoder.encode("size2|short_description|description|owner|hint2", "UTF-8");
+            URLEncoder.encode("size2|short_description|description|owner|hint2|req_passwd", "UTF-8");
 
         final HttpResponse response = httpClient.get(url);
         final String http = response.getBody();
@@ -184,6 +185,7 @@ public class OKAPI
         g.setListing(document.getDescription());
         g.setOwner(document.getOwnerUsername());
         g.setHint(document.getHint2());
+        g.setRequiresPassword(document.doesRequirePassword());
         return g;
     }
 
@@ -354,18 +356,25 @@ public class OKAPI
         throws MalFormedException, InterruptedException, ExecutionException, IOException
     {
         String url = "https://www.opencaching.de/okapi/services/logs/submit"
-                     + "?format=xmlmap2"
+                     + "?format=json"
                      + "&cache_code=" + URLEncoder.encode(cache.getCode(), "UTF-8") +
                      "&logtype=" + URLEncoder.encode("Found it", "UTF-8") +
                      "&comment=" + URLEncoder.encode(log.getText(), "UTF-8") +
                      "&when=" + URLEncoder.encode(log.getDateStrISO8601NoTime(), "UTF-8");
-        authedHttpGet(tp, url);
 
-        //		String http = authedHttpGet(user, url);
-        //		object><boolean key="success">true</boolean><string
-        // key="message">Your cache log entry was posted
-        // successfully.</string><string
-        // key="log_uuid">e1d494fc-0ab4-48b0-b709-aa566f20dc4d</string></object>
+        /*if (cache.doesRequirePassword()) {
+            url += "&password=" + URLEncoder.encode(log.getPassword(), "UTF-8");
+        }*/
+
+        //System.out.println(url);
+
+        final String response = authedHttpGet(tp, url);
+
+        /*final LogSubmissionDocument document = new Gson().fromJson(response, LogSubmissionDocument.class);
+        if (document == null) return;
+        if (!document.isSuccess()) {
+            System.out.println("Error while logging cache: " + document.getMessage());
+        }*/
     }
 
 
