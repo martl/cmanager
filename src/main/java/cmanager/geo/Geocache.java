@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 import org.joda.time.DateTime;
 
+import cmanager.global.Constants;
 import cmanager.util.ObjectHelper;
 
 
@@ -112,12 +113,13 @@ public class Geocache implements Serializable, Comparable<String>
         }
     }
 
-    public String getURL()
-    {
-        if (isGC())
+    public String getURL() {
+        if (isGC()) {
             return "https://www.geocaching.com/geocache/" + code;
-        if (isOC())
-            return "https://www.opencaching.de/" + code;
+        }
+        if (isOC()) {
+            return Constants.SITE_BASE + code;
+        }
 
         return null;
     }
