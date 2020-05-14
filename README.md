@@ -4,13 +4,15 @@ The cache manager (cmanager) is a Java based program which is able to manage GPX
 
 Further information in German:
 
-* http://wiki.opencaching.de/index.php/Cmanager
-* http://forum.opencaching.de/
+* https://wiki.opencaching.de/index.php/Cmanager
+* https://forum.opencaching.de/index.php?topic=4348.0
 
 ## License & Source Code
 
 `cmanager` is distributed under the [The GNU General Public License v3](http://www.gnu.org/licenses/gpl-3.0-standalone.html).
 The sources are available on GitHub ([link](https://github.com/FriedrichFroebel/cmanager)).
+
+This version is a fork of the [original repository by Samsung1](https://github.com/RoffelKartoffel/cmanager). While the original version discontinued support for the log transfer functionality itself, this fork tries to keep it working. Additionally some problems of the original version have been fixed.
 
 ## Distribution / "Download"
 
@@ -20,7 +22,7 @@ Releases are published on GitHubs as ["Releases"](https://github.com/FriedrichFr
 
 ### Prerequisites
 
-- Java development kit (JDK) in version >= 8.
+- Java development kit (JDK) in version >= 8. I recommend you to use at least Java 10.
 - You need to provide API keys for compiling `cmanager`. See next section for details.
 
 ### API keys

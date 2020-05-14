@@ -20,8 +20,7 @@ import java.awt.Insets;
 import java.awt.Font;
 import javax.swing.JLayeredPane;
 
-public class AboutDialog extends JDialog
-{
+public class AboutDialog extends JDialog {
 
     private static final long serialVersionUID = 1L;
     private final JLayeredPane contentPanel = new JLayeredPane();
@@ -32,8 +31,7 @@ public class AboutDialog extends JDialog
     /**
      * Create the dialog.
      */
-    public AboutDialog()
-    {
+    public AboutDialog() {
         setTitle("About " + Constants.APP_NAME);
 
         setBounds(100, 100, 450, 300);
@@ -66,7 +64,14 @@ public class AboutDialog extends JDialog
             contentPanel.add(lblVersion, gbc_lblVersion);
         }
         {
-            JLabel lblAuthor = new JLabel("Samsung1 - jm@rq-project.net");
+            JLabel lblAuthor = new JLabel(
+                "<html>"
+                + "<b>Original code by</b> " 
+                + "Samsung1 - jm@rq-project.net"
+                + "<br/>"
+                + "<b>Modifications by</b> "
+                + "FriedrichFr&ouml;bel"
+                + "</html>");
             lblAuthor.setFont(new Font("Dialog", Font.PLAIN, 12));
             GridBagConstraints gbc_lblAuthor = new GridBagConstraints();
             gbc_lblAuthor.insets = new Insets(40, 0, 5, 0);
@@ -76,7 +81,7 @@ public class AboutDialog extends JDialog
         }
         {
             JLabel lblThanks =
-                new JLabel("Special thanks to the great people at forum.opencaching.de .");
+                new JLabel("Special thanks to the great people at forum.opencaching.de.");
             lblThanks.setFont(new Font("Dialog", Font.PLAIN, 12));
             GridBagConstraints gbc_lblThanks = new GridBagConstraints();
             gbc_lblThanks.insets = new Insets(80, 0, 5, 0);
@@ -91,8 +96,7 @@ public class AboutDialog extends JDialog
             {
                 JButton btnClose = new JButton("Close");
                 btnClose.addActionListener(new ActionListener() {
-                    public void actionPerformed(ActionEvent arg0)
-                    {
+                    public void actionPerformed(ActionEvent arg0) {
                         THIS.setVisible(false);
                     }
                 });

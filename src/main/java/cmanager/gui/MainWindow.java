@@ -6,7 +6,6 @@ import java.awt.Dialog;
 import java.awt.Dialog.ModalityType;
 import java.awt.Dimension;
 
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -23,6 +22,7 @@ import cmanager.FileHelper;
 import cmanager.geo.Geocache;
 import cmanager.geo.Location;
 import cmanager.geo.LocationList;
+import cmanager.global.Compatibility;
 import cmanager.global.Constants;
 import cmanager.network.Updates;
 import cmanager.okapi.User;
@@ -76,8 +76,7 @@ public class MainWindow extends JFrame
     /**
      * Create the frame.
      */
-    public MainWindow()
-    {
+    public MainWindow() {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(new Dimension(1050, 550));
         setLocationRelativeTo(null);
@@ -93,7 +92,7 @@ public class MainWindow extends JFrame
 
         JMenuItem mntmOpen = new JMenuItem("Open");
         mntmOpen.setAccelerator(
-            KeyStroke.getKeyStroke('O', Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx()));
+            KeyStroke.getKeyStroke('O', Compatibility.SHORTCUT_KEY_MASK));
         mntmOpen.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent arg0)
             {
@@ -103,7 +102,7 @@ public class MainWindow extends JFrame
 
         JMenuItem mntmNew = new JMenuItem("New");
         mntmNew.setAccelerator(
-            KeyStroke.getKeyStroke('N', Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx()));
+            KeyStroke.getKeyStroke('N', Compatibility.SHORTCUT_KEY_MASK));
         mntmNew.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e)
             {
@@ -147,7 +146,7 @@ public class MainWindow extends JFrame
 
         final JMenuItem mntmSave = new JMenuItem("Save");
         mntmSave.setAccelerator(
-            KeyStroke.getKeyStroke('S', Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx()));
+            KeyStroke.getKeyStroke('S', Compatibility.SHORTCUT_KEY_MASK));
         mntmSave.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent arg0)
             {
@@ -231,7 +230,7 @@ public class MainWindow extends JFrame
 
         JMenuItem mntmCopy = new JMenuItem("Copy");
         mntmCopy.setAccelerator(
-            KeyStroke.getKeyStroke('C', Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx()));
+            KeyStroke.getKeyStroke('C', Compatibility.SHORTCUT_KEY_MASK));
         mntmCopy.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent arg0)
             {
@@ -241,7 +240,7 @@ public class MainWindow extends JFrame
 
         JMenuItem mntmSelectAll = new JMenuItem("Select All / none");
         mntmSelectAll.setAccelerator(
-            KeyStroke.getKeyStroke('A', Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx()));
+            KeyStroke.getKeyStroke('A', Compatibility.SHORTCUT_KEY_MASK));
         mntmSelectAll.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e)
             {
@@ -254,7 +253,7 @@ public class MainWindow extends JFrame
 
         JMenuItem mntInvertSelection = new JMenuItem("Invert Selection");
         mntInvertSelection.setAccelerator(
-            KeyStroke.getKeyStroke('I', Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx()));
+            KeyStroke.getKeyStroke('I', Compatibility.SHORTCUT_KEY_MASK));
         mntInvertSelection.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e)
             {
@@ -271,7 +270,7 @@ public class MainWindow extends JFrame
 
         JMenuItem mntmPaste = new JMenuItem("Paste");
         mntmPaste.setAccelerator(
-            KeyStroke.getKeyStroke('V', Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx()));
+            KeyStroke.getKeyStroke('V', Compatibility.SHORTCUT_KEY_MASK));
         mntmPaste.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e)
             {
@@ -281,7 +280,7 @@ public class MainWindow extends JFrame
 
         JMenuItem mntmCut = new JMenuItem("Cut");
         mntmCut.setAccelerator(
-            KeyStroke.getKeyStroke('X', Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx()));
+            KeyStroke.getKeyStroke('X', Compatibility.SHORTCUT_KEY_MASK));
         mntmCut.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e)
             {
@@ -293,7 +292,7 @@ public class MainWindow extends JFrame
 
         final JMenuItem mntmDeleteSelectedCaches = new JMenuItem("Delete");
         mntmDeleteSelectedCaches.setAccelerator(
-            KeyStroke.getKeyStroke('D', Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx()));
+            KeyStroke.getKeyStroke('D', Compatibility.SHORTCUT_KEY_MASK));
         mntmDeleteSelectedCaches.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent arg0)
             {
@@ -307,7 +306,7 @@ public class MainWindow extends JFrame
 
         final JMenuItem mntmUndoAction = new JMenuItem("Undo");
         mntmUndoAction.setAccelerator(
-            KeyStroke.getKeyStroke('Z', Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx()));
+            KeyStroke.getKeyStroke('Z', Compatibility.SHORTCUT_KEY_MASK));
         mntmUndoAction.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent arg0)
             {
@@ -438,6 +437,19 @@ public class MainWindow extends JFrame
         mnWindows.setEnabled(false);
         menuBar.add(mnWindows);
 
+        final JMenu menuInfo = new JMenu("Information");
+        final JMenuItem menuItemAbout = new JMenuItem("About");
+        menuItemAbout.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent arg0) {
+                final AboutDialog dialog = new AboutDialog();
+                dialog.setLocationRelativeTo(THIS);
+                dialog.setModalityType(Dialog.ModalityType.APPLICATION_MODAL);
+                dialog.setVisible(true);
+            }
+        });
+        menuInfo.add(menuItemAbout);
+        menuBar.add(menuInfo);
+
         contentPane = new JPanel();
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
         contentPane.setLayout(new BorderLayout(0, 0));
@@ -484,35 +496,30 @@ public class MainWindow extends JFrame
         btnUpdate.setOpaque(false);
         btnUpdate.setContentAreaFilled(false);
         btnUpdate.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e)
-            {
-                DesktopUtil.openUrl("https://github.com/RoffelKartoffel/cmanager/releases");
+            public void actionPerformed(ActionEvent e) {
+                DesktopUtil.openUrl("https://github.com/FriedrichFroebel/cmanager/releases");
             }
         });
         panelUpdate.add(btnUpdate);
 
         new SwingWorker<Void, Boolean>() {
             @Override
-            protected Void doInBackground() throws Exception
-            {
+            protected Void doInBackground() throws Exception {
                 publish(Updates.updateAvailable_block());
                 return null;
             }
 
             @Override
-            protected void process(List<Boolean> chunks)
-            {
-                // Display update message if there is a nother version available
-                if (chunks.get(0))
-                {
+            protected void process(List<Boolean> chunks) {
+                // Display update message if there is another version available
+                if (chunks.get(0)) {
                     setText("Version " + Updates.getNewVersion() + " of " + Constants.APP_NAME +
                             " is available. Click here for updates!");
                     btnUpdate.setVisible(true);
                 }
             }
 
-            private void setText(String text)
-            {
+            private void setText(String text) {
                 btnUpdate.setText("<HTML><FONT color=\"#008000\"><U>" + text +
                                   "</U></FONT></HTML>");
             }

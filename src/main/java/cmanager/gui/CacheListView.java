@@ -24,6 +24,7 @@ import cmanager.CacheListFilterModel;
 import cmanager.CacheListModel;
 import cmanager.geo.Geocache;
 import cmanager.geo.GeocacheType;
+import cmanager.global.Compatibility;
 import cmanager.global.Constants;
 import cmanager.osm.PersitentTileCache;
 import cmanager.util.DesktopUtil;
@@ -365,27 +366,27 @@ public class CacheListView extends JInternalFrame
         table.getInputMap(JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT)
             .getParent()
             .remove(
-                KeyStroke.getKeyStroke('C', Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx()));
+                KeyStroke.getKeyStroke('C', Compatibility.SHORTCUT_KEY_MASK));
         table.getInputMap(JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT)
             .getParent()
             .remove(
-                KeyStroke.getKeyStroke('V', Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx()));
+                KeyStroke.getKeyStroke('V', Compatibility.SHORTCUT_KEY_MASK));
         table.getInputMap(JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT)
             .getParent()
             .remove(
-                KeyStroke.getKeyStroke('X', Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx()));
+                KeyStroke.getKeyStroke('X', Compatibility.SHORTCUT_KEY_MASK));
         table.getInputMap(JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT)
             .getParent()
             .remove(
-                KeyStroke.getKeyStroke('A', Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx()));
+                KeyStroke.getKeyStroke('A', Compatibility.SHORTCUT_KEY_MASK));
         table.getInputMap(JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT)
             .getParent()
             .remove(
-                KeyStroke.getKeyStroke('I', Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx()));
+                KeyStroke.getKeyStroke('I', Compatibility.SHORTCUT_KEY_MASK));
         table.getInputMap(JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT)
             .getParent()
             .remove(
-                KeyStroke.getKeyStroke('Z', Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx()));
+                KeyStroke.getKeyStroke('Z', Compatibility.SHORTCUT_KEY_MASK));
 
 
         //		tglbtnCache.doClick();
