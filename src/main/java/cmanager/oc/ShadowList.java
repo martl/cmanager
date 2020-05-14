@@ -56,7 +56,7 @@ public class ShadowList
     {
         final HashMap<String, String> shadowList = new HashMap<>();
 
-        System.out.println("Shadow list retrieval disabled as the API endpoint seems to be broken for now.");
+        System.out.println("The shadow list retrieval has been disabled temporarily as the API endpoint seems to be broken for now.");
         // TODO: Enable after the GZip archive is valid again.
         /*FileHelper.processFiles(SHADOWLIST_PATH, new InputAction() {
             @Override
