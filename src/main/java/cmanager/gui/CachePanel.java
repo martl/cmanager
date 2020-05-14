@@ -105,10 +105,10 @@ public class CachePanel extends javax.swing.JPanel
         if (g.getOwner() != null)
             colorize(lblOwner, g.getOwner().equals(g2.getOwner()));
 
-        colorize(lblType, g.getType() == g2.getType());
+        colorize(lblType, g.getType().equals(g2.getType()));
         colorize(lblDifficulty, Double.compare(g.getDifficulty(), g2.getDifficulty()) == 0);
         colorize(lblTerrain, Double.compare(g.getTerrain(), g2.getTerrain()) == 0);
-        colorize(lblContainer, g.getContainer() == g2.getContainer());
+        colorize(lblContainer, g.getContainer().equals(g2.getContainer()));
     }
 
     private void colorize(JLabel label, boolean good)
