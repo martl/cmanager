@@ -1,11 +1,10 @@
 package cmanager.okapi.responses;
 
-public class UUIDDocument
-{
+public class UUIDDocument {
+
     private String uuid;
 
-    public String getUuid()
-    {
+    public String getUuid() {
         return uuid;
     }
 }

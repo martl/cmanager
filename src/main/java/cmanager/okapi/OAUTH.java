@@ -1,9 +1,7 @@
 package cmanager.okapi;
 
-import com.github.scribejava.core.builder.api.DefaultApi10a;
-import com.github.scribejava.core.model.OAuth1RequestToken;
-
 import cmanager.global.Constants;
+import com.github.scribejava.core.builder.api.DefaultApi10a;
 
 public class OAUTH extends DefaultApi10a {
 
@@ -21,5 +19,4 @@ public class OAUTH extends DefaultApi10a {
     public String getAuthorizationBaseUrl() {
         return Constants.OKAPI_SERVICE_BASE + "/oauth/authorize";
     }
-
 }

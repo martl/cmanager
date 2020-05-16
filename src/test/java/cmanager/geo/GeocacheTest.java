@@ -1,77 +1,56 @@
 package cmanager.geo;
 
-import org.junit.Test;
-
-import cmanager.util.ObjectHelper;
-
 import static org.junit.Assert.*;
 
-public class GeocacheTest
-{
+import cmanager.util.ObjectHelper;
+import org.junit.Test;
+
+public class GeocacheTest {
+
     @Test
-    public void testConstructor()
-    {
+    public void testConstructor() {
 
         new Geocache("OC1234", "test", new Coordinate(0, 0), 0.0, 0.0, "Tradi");
 
-        try
-        {
+        try {
             new Geocache(null, "test", new Coordinate(0, 0), 0.0, 0.0, "Tradi");
             fail("Exception expected");
-        }
-        catch (NullPointerException e)
-        {
+        } catch (NullPointerException e) {
         }
 
-        try
-        {
+        try {
             new Geocache("OC1234", null, new Coordinate(0, 0), 0.0, 0.0, "Tradi");
             fail("Exception expected");
-        }
-        catch (NullPointerException e)
-        {
+        } catch (NullPointerException e) {
         }
 
-        try
-        {
+        try {
             new Geocache("OC1234", "test", null, 0.0, 0.0, "Tradi");
             fail("Exception expected");
-        }
-        catch (NullPointerException e)
-        {
+        } catch (NullPointerException e) {
         }
 
-        try
-        {
+        try {
             new Geocache("OC1234", "test", new Coordinate(0, 0), null, 0.0, "Tradi");
             fail("Exception expected");
-        }
-        catch (NullPointerException e)
-        {
+        } catch (NullPointerException e) {
         }
 
-        try
-        {
+        try {
             new Geocache("OC1234", "test", new Coordinate(0, 0), 0.0, null, "Tradi");
             fail("Exception expected");
-        }
-        catch (NullPointerException e)
-        {
+        } catch (NullPointerException e) {
         }
 
-        try
-        {
+        try {
             new Geocache("OC1234", "test", new Coordinate(0, 0), 0.0, 0.0, null);
             fail("Exception expected");
-        }
-        catch (NullPointerException e)
-        {
+        } catch (NullPointerException e) {
         }
     }
 
     @Test
-    public void testDataInterpretation()
-    {
+    public void testDataInterpretation() {
         Geocache g;
         g = new Geocache("OC1234", "test", new Coordinate(0, 0), 0.0, 0.0, "Tradi");
         assertTrue(g.isOC());
@@ -90,10 +69,9 @@ public class GeocacheTest
     }
 
     @Test
-    public void testSerialize()
-    {
-        Geocache g = new Geocache("OC1234", "test", new Coordinate(0, 0), 0.0, 0.0, "Tradi");
-        Geocache g2 = ObjectHelper.copy(g);
+    public void testSerialize() {
+        final Geocache g = new Geocache("OC1234", "test", new Coordinate(0, 0), 0.0, 0.0, "Tradi");
+        final Geocache g2 = ObjectHelper.copy(g);
         assertTrue(g2 != null);
     }
 }

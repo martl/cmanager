@@ -1,22 +1,19 @@
 package cmanager.geo;
 
-
 import java.io.Serializable;
-
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 import org.joda.time.format.ISODateTimeFormat;
 
-public class GeocacheLog implements Serializable
-{
+public class GeocacheLog implements Serializable {
+
     private static final long serialVersionUID = -2611937420437874774L;
 
-
     public static final TypeMap TYPE = new TypeMap();
-    static
-    {
+
+    static {
         TYPE.add("Found it");
         TYPE.add("Didn't find it");
         TYPE.add("Write note", "Note");
@@ -41,14 +38,12 @@ public class GeocacheLog implements Serializable
         TYPE.add("Unarchive");
     }
 
-    public void setType(String type)
-    {
+    public void setType(String type) {
         type = type.toLowerCase();
         this.type = TYPE.getLowercase(type);
     }
 
-    public String getTypeStr()
-    {
+    public String getTypeStr() {
         return TYPE.get(type, 0);
     }
 
@@ -58,13 +53,13 @@ public class GeocacheLog implements Serializable
     private DateTime date;
     private String password;
 
-    public GeocacheLog(String type, String author, String text, String date)
-    {
+    public GeocacheLog(String type, String author, String text, String date) {
         setType(type);
         setDate(date);
 
-        if (author == null || text == null)
+        if (author == null || text == null) {
             throw new NullPointerException();
+        }
 
         this.author = author;
         this.text = text;
@@ -75,72 +70,64 @@ public class GeocacheLog implements Serializable
         setType(type);
         setDate(date);
 
-        if (author == null || text == null)
+        if (author == null || text == null) {
             throw new NullPointerException();
+        }
 
         this.author = author;
         this.text = text;
         this.password = password;
     }
 
-    public void setDate(String date)
-    {
+    public void setDate(String date) {
         // <groundspeak:date>2015-08-16T19:00:00Z</groundspeak:date>
         // ISO 8601
         this.date = new DateTime(date, DateTimeZone.UTC);
     }
 
-    public String getAuthor()
-    {
+    public String getAuthor() {
         return author;
     }
 
-    public boolean isAuthor(String name)
-    {
+    public boolean isAuthor(String name) {
         return author.toLowerCase().equals(name.toLowerCase());
     }
 
-    public boolean isFoundLog()
-    {
-        String typeStr = getTypeStr();
-        if (typeStr.equals("Found it") || typeStr.equals("Attended") ||
-            typeStr.equals("Webcam Photo Taken"))
+    public boolean isFoundLog() {
+        final String typeStr = getTypeStr();
+        if (typeStr.equals("Found it")
+                || typeStr.equals("Attended")
+                || typeStr.equals("Webcam Photo Taken")) {
             return true;
+        }
 
         return false;
     }
 
-    public String getText()
-    {
+    public String getText() {
         return text;
     }
 
-    public DateTime getDate()
-    {
+    public DateTime getDate() {
         return date;
     }
 
-    public String getDateStr()
-    {
-        DateTimeFormatter fmt = DateTimeFormat.forPattern("dd.MM.yyyy HH:mm");
+    public String getDateStr() {
+        final DateTimeFormatter fmt = DateTimeFormat.forPattern("dd.MM.yyyy HH:mm");
         return fmt.print(date);
     }
 
-    public String getDateStrISO8601()
-    {
-        DateTimeFormatter fmt = ISODateTimeFormat.dateTime();
+    public String getDateStrISO8601() {
+        final DateTimeFormatter fmt = ISODateTimeFormat.dateTime();
         return fmt.print(date);
     }
 
-    public static String getDateStrISO8601NoTime(DateTime date)
-    {
-        DateTimeFormatter fmt = ISODateTimeFormat.date();
-        ;
+    public static String getDateStrISO8601NoTime(DateTime date) {
+        final DateTimeFormatter fmt = ISODateTimeFormat.date();
         return fmt.print(date);
     }
 
-    public String getDateStrISO8601NoTime()
-    {
+    public String getDateStrISO8601NoTime() {
         return getDateStrISO8601NoTime(date);
     }
 
@@ -148,9 +135,10 @@ public class GeocacheLog implements Serializable
         return password;
     }
 
-    public boolean equals(GeocacheLog log)
-    {
-        return type == log.type && date.equals(log.date) && author.equals(log.author) &&
-            text.equals(log.text);
+    public boolean equals(GeocacheLog log) {
+        return type == log.type
+                && date.equals(log.date)
+                && author.equals(log.author)
+                && text.equals(log.text);
     }
 }

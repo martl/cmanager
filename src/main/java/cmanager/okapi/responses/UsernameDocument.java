@@ -1,11 +1,10 @@
 package cmanager.okapi.responses;
 
-public class UsernameDocument
-{
+public class UsernameDocument {
+
     private String username;
 
-    public String getUsername()
-    {
+    public String getUsername() {
         return username;
     }
 }

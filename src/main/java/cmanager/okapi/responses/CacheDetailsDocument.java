@@ -1,9 +1,8 @@
 package cmanager.okapi.responses;
 
-public class CacheDetailsDocument
-{
-    private class Owner
-    {
+public class CacheDetailsDocument {
+
+    private class Owner {
 
         String uuid;
         String username;
@@ -17,37 +16,35 @@ public class CacheDetailsDocument
     String hint2;
     Boolean req_passwd;
 
-    public String getOwnerUuid()
-    {
+    public String getOwnerUuid() {
         return owner.uuid;
     }
-    public String getOwnerUsername()
-    {
+
+    public String getOwnerUsername() {
         return owner.username;
     }
-    public String getOwnerProfile_url()
-    {
+
+    public String getOwnerProfile_url() {
         return owner.profile_url;
     }
 
-    public String getSize2()
-    {
+    public String getSize2() {
         return size2;
     }
-    public Owner getOwner()
-    {
+
+    public Owner getOwner() {
         return owner;
     }
-    public String getShort_description()
-    {
+
+    public String getShort_description() {
         return short_description;
     }
-    public String getDescription()
-    {
+
+    public String getDescription() {
         return description;
     }
-    public String getHint2()
-    {
+
+    public String getHint2() {
         return hint2;
     }
 

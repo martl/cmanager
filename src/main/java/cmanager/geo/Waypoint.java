@@ -1,14 +1,13 @@
 package cmanager.geo;
 
 import java.io.Serializable;
-
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 import org.joda.time.format.DateTimeFormatter;
 import org.joda.time.format.ISODateTimeFormat;
 
-public class Waypoint implements Serializable
-{
+public class Waypoint implements Serializable {
+
     private static final long serialVersionUID = 3154357724453317729L;
 
     private Coordinate coords = null;
@@ -19,12 +18,16 @@ public class Waypoint implements Serializable
     private String parent = null;
     private DateTime date = null;
 
-
-    public Waypoint(Coordinate coords, String code, String description, String symbol, String type,
-                    String parent)
-    {
-        if (code == null)
+    public Waypoint(
+            Coordinate coords,
+            String code,
+            String description,
+            String symbol,
+            String type,
+            String parent) {
+        if (code == null) {
             throw new NullPointerException();
+        }
 
         this.coords = coords;
         this.code = code;
@@ -34,58 +37,44 @@ public class Waypoint implements Serializable
         this.parent = parent;
     }
 
-
-    public void setDate(String date)
-    {
+    public void setDate(String date) {
         this.date = date == null ? null : new DateTime(date, DateTimeZone.UTC);
     }
 
-    public String getDateStrISO8601()
-    {
-        if (date == null)
+    public String getDateStrISO8601() {
+        if (date == null) {
             return null;
+        }
 
-        DateTimeFormatter fmt = ISODateTimeFormat.dateTime();
+        final DateTimeFormatter fmt = ISODateTimeFormat.dateTime();
         return fmt.print(date);
     }
 
-
-    public Coordinate getCoordinate()
-    {
+    public Coordinate getCoordinate() {
         return coords;
     }
 
-    public String getCode()
-    {
+    public String getCode() {
         return code;
     }
 
-
-    public String getDescription()
-    {
+    public String getDescription() {
         return description;
     }
 
-
-    public String getSymbol()
-    {
+    public String getSymbol() {
         return symbol;
     }
 
-
-    public String getType()
-    {
+    public String getType() {
         return type;
     }
 
-
-    public String getParent()
-    {
+    public String getParent() {
         return parent;
     }
 
-    public void setParent(String parent)
-    {
+    public void setParent(String parent) {
         this.parent = parent;
     }
 }

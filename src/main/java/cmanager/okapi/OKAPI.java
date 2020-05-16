@@ -1,22 +1,5 @@
 package cmanager.okapi;
 
-import java.io.IOException;
-import java.net.URLEncoder;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.concurrent.ExecutionException;
-
-import com.google.gson.Gson;
-
-import com.github.scribejava.core.builder.ServiceBuilder;
-import com.github.scribejava.core.model.OAuth1AccessToken;
-import com.github.scribejava.core.model.OAuth1RequestToken;
-import com.github.scribejava.core.model.OAuthRequest;
-import com.github.scribejava.core.model.Response;
-import com.github.scribejava.core.model.Verb;
-import com.github.scribejava.core.oauth.OAuth10aService;
-
 import cmanager.MalFormedException;
 import cmanager.geo.Coordinate;
 import cmanager.geo.Geocache;
@@ -31,26 +14,42 @@ import cmanager.okapi.responses.CacheDocument;
 import cmanager.okapi.responses.CachesAroundDocument;
 import cmanager.okapi.responses.ErrorDocument;
 import cmanager.okapi.responses.FoundStatusDocument;
-import cmanager.okapi.responses.LogSubmissionDocument;
 import cmanager.okapi.responses.UUIDDocument;
 import cmanager.okapi.responses.UsernameDocument;
 import cmanager.xml.Element;
 import cmanager.xml.Parser;
+import com.github.scribejava.core.builder.ServiceBuilder;
+import com.github.scribejava.core.model.OAuth1AccessToken;
+import com.github.scribejava.core.model.OAuth1RequestToken;
+import com.github.scribejava.core.model.OAuthRequest;
+import com.github.scribejava.core.model.Response;
+import com.github.scribejava.core.model.Verb;
+import com.github.scribejava.core.oauth.OAuth10aService;
+import com.google.gson.Gson;
+import java.io.IOException;
+import java.net.URLEncoder;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.concurrent.ExecutionException;
 
 public class OKAPI {
 
-    private final static String CONSUMER_API_KEY = ConsumerKeys.get_CONSUMER_API_KEY();
-    private final static String CONSUMER_SECRET_KEY = ConsumerKeys.get_CONSUMER_SECRET_KEY();
-    private final static String BASE_URL = Constants.OKAPI_SERVICE_BASE;
+    private static final String CONSUMER_API_KEY = ConsumerKeys.get_CONSUMER_API_KEY();
+    private static final String CONSUMER_SECRET_KEY = ConsumerKeys.get_CONSUMER_SECRET_KEY();
+    private static final String BASE_URL = Constants.OKAPI_SERVICE_BASE;
 
     private static ApacheHTTP httpClient = new ApacheHTTP();
 
     public static String usernameToUUID(String username) throws Exception {
-        final String url = BASE_URL
-                           + "/users/by_username"
-                           + "?consumer_key=" + CONSUMER_API_KEY
-                           + "&username=" + URLEncoder.encode(username, "UTF-8")
-                           + "&fields=uuid";
+        final String url =
+                BASE_URL
+                        + "/users/by_username"
+                        + "?consumer_key="
+                        + CONSUMER_API_KEY
+                        + "&username="
+                        + URLEncoder.encode(username, "UTF-8")
+                        + "&fields=uuid";
 
         final HttpResponse response = httpClient.get(url);
         final String http = response.getBody();
@@ -68,13 +67,16 @@ public class OKAPI {
         return document.getUuid();
     }
 
-
     public static Geocache getCache(String code) throws Exception {
-        final String url = BASE_URL
-                           + "/caches/geocache"
-                           + "?consumer_key=" + CONSUMER_API_KEY
-                           + "&cache_code=" + code
-                           + "&fields=" + URLEncoder.encode(
+        final String url =
+                BASE_URL
+                        + "/caches/geocache"
+                        + "?consumer_key="
+                        + CONSUMER_API_KEY
+                        + "&cache_code="
+                        + code
+                        + "&fields="
+                        + URLEncoder.encode(
                                 "code|name|location|type|gc_code|difficulty|terrain|status",
                                 "UTF-8");
 
@@ -97,15 +99,21 @@ public class OKAPI {
 
         Coordinate coordinate = null;
         if (document.getLocation() != null) {
-            String[] parts = document.getLocation().split("\\|");
+            final String[] parts = document.getLocation().split("\\|");
             coordinate = new Coordinate(parts[0], parts[1]);
         }
 
-        Geocache g = new Geocache(code, document.getName(), coordinate, document.getDifficulty(),
-                                  document.getTerrain(), document.getType());
+        final Geocache g =
+                new Geocache(
+                        code,
+                        document.getName(),
+                        coordinate,
+                        document.getDifficulty(),
+                        document.getTerrain(),
+                        document.getType());
         g.setCodeGC(document.getGc_code());
 
-        String status = document.getStatus();
+        final String status = document.getStatus();
         if (status != null) {
             if (status.equals("Archived")) {
                 g.setAvailable(false);
@@ -122,36 +130,41 @@ public class OKAPI {
         return g;
     }
 
-
     public static Geocache getCacheBuffered(String code, ArrayList<Geocache> okapiRuntimeCache)
-        throws Exception {
+            throws Exception {
         synchronized (okapiRuntimeCache) {
-            int index = Collections.binarySearch(okapiRuntimeCache, code);
+            final int index = Collections.binarySearch(okapiRuntimeCache, code);
             if (index >= 0) {
                 return okapiRuntimeCache.get(index);
             }
         }
 
-        Geocache g = getCache(code);
+        final Geocache g = getCache(code);
         if (g != null) {
             synchronized (okapiRuntimeCache) {
                 okapiRuntimeCache.add(g);
-                Collections.sort(okapiRuntimeCache, new Comparator<Geocache>() {
-                    public int compare(Geocache o1, Geocache o2) {
-                        return o1.getCode().compareTo(o2.getCode());
-                    }
-                });
+                Collections.sort(
+                        okapiRuntimeCache,
+                        new Comparator<Geocache>() {
+                            public int compare(Geocache o1, Geocache o2) {
+                                return o1.getCode().compareTo(o2.getCode());
+                            }
+                        });
             }
         }
         return g;
     }
 
     public static Geocache completeCacheDetails(Geocache g) throws Exception {
-        final String url = BASE_URL
-                           + "/caches/geocache"
-                           + "?consumer_key=" + CONSUMER_API_KEY
-                           + "&cache_code=" + g.getCode()
-                           + "&fields=" + URLEncoder.encode(
+        final String url =
+                BASE_URL
+                        + "/caches/geocache"
+                        + "?consumer_key="
+                        + CONSUMER_API_KEY
+                        + "&cache_code="
+                        + g.getCode()
+                        + "&fields="
+                        + URLEncoder.encode(
                                 "size2|short_description|description|owner|hint2|req_passwd",
                                 "UTF-8");
 
@@ -181,35 +194,36 @@ public class OKAPI {
 
     public interface RequestAuthorizationCallbackI {
         public void redirectUrlToUser(String authUrl);
+
         public String getPin();
     }
 
     private static OAuth10aService getOAuthService() {
         return new ServiceBuilder(CONSUMER_API_KEY)
-            .apiSecret(CONSUMER_SECRET_KEY)
-            .build(new OAUTH());
+                .apiSecret(CONSUMER_SECRET_KEY)
+                .build(new OAUTH());
     }
 
     public static OAuth1AccessToken requestAuthorization(RequestAuthorizationCallbackI callback)
-        throws IOException, InterruptedException, ExecutionException {
+            throws IOException, InterruptedException, ExecutionException {
         // Step One: Create the OAuthService object
-        OAuth10aService service = getOAuthService();
+        final OAuth10aService service = getOAuthService();
 
         // Step Two: Get the request token
-        OAuth1RequestToken requestToken = service.getRequestToken();
+        final OAuth1RequestToken requestToken = service.getRequestToken();
 
         // Step Three: Making the user validate your request token
-        String authUrl = service.getAuthorizationUrl(requestToken);
+        final String authUrl = service.getAuthorizationUrl(requestToken);
         callback.redirectUrlToUser(authUrl);
 
-        String pin = callback.getPin();
+        final String pin = callback.getPin();
         if (pin == null) {
             return null;
         }
 
         // Step Four: Get the access Token
-        OAuth1AccessToken accessToken =
-            service.getAccessToken(requestToken, pin); // the requestToken you had from step 2
+        final OAuth1AccessToken accessToken =
+                service.getAccessToken(requestToken, pin); // the requestToken you had from step 2
 
         return accessToken;
     }
@@ -219,39 +233,49 @@ public class OKAPI {
     }
 
     private static String authedHttpGet(final TokenProviderI tp, final String url)
-        throws InterruptedException, ExecutionException, IOException {
-        OAuth10aService service = getOAuthService();
-        OAuthRequest request = new OAuthRequest(Verb.GET, url);
+            throws InterruptedException, ExecutionException, IOException {
+        final OAuth10aService service = getOAuthService();
+        final OAuthRequest request = new OAuthRequest(Verb.GET, url);
         service.signRequest(tp.getOkapiToken(), request); // the access token from step 4
         final Response response = service.execute(request);
         return response.getBody();
     }
 
-    public static ArrayList<Geocache> getCachesAround(TokenProviderI tp, String excludeUUID,
-                                                      Geocache g, double searchRadius,
-                                                      ArrayList<Geocache> okapiRuntimeCache)
-        throws Exception {
-        Coordinate c = g.getCoordinate();
-        return getCachesAround(tp, excludeUUID, c.getLat(), c.getLon(), searchRadius,
-                               okapiRuntimeCache);
+    public static ArrayList<Geocache> getCachesAround(
+            TokenProviderI tp,
+            String excludeUUID,
+            Geocache g,
+            double searchRadius,
+            ArrayList<Geocache> okapiRuntimeCache)
+            throws Exception {
+        final Coordinate c = g.getCoordinate();
+        return getCachesAround(
+                tp, excludeUUID, c.getLat(), c.getLon(), searchRadius, okapiRuntimeCache);
     }
 
-    public static ArrayList<Geocache> getCachesAround(TokenProviderI tp, String excludeUUID,
-                                                      Double lat, Double lon, Double searchRadius,
-                                                      ArrayList<Geocache> okapiCacheDetailsCache)
-        throws Exception {
+    public static ArrayList<Geocache> getCachesAround(
+            TokenProviderI tp,
+            String excludeUUID,
+            Double lat,
+            Double lon,
+            Double searchRadius,
+            ArrayList<Geocache> okapiCacheDetailsCache)
+            throws Exception {
         final boolean useOAuth = tp != null && excludeUUID != null;
-        final String url = BASE_URL
-                           + "/caches/search/nearest"
-                           + "?consumer_key=" + CONSUMER_API_KEY
-                           + "&center=" + URLEncoder.encode(
-                                lat.toString() + "|" + lon.toString(), "UTF-8")
-                           + "&radius=" + searchRadius.toString()
-                           + "&status=" + URLEncoder.encode(
-                                "Available|Temporarily unavailable|Archived", "UTF-8")
-                           + "&limit=500"
-                           + (useOAuth ? "&ignored_status=notignored_only" : "")
-                           + (useOAuth ? "&not_found_by=" + excludeUUID : "");
+        final String url =
+                BASE_URL
+                        + "/caches/search/nearest"
+                        + "?consumer_key="
+                        + CONSUMER_API_KEY
+                        + "&center="
+                        + URLEncoder.encode(lat.toString() + "|" + lon.toString(), "UTF-8")
+                        + "&radius="
+                        + searchRadius.toString()
+                        + "&status="
+                        + URLEncoder.encode("Available|Temporarily unavailable|Archived", "UTF-8")
+                        + "&limit=500"
+                        + (useOAuth ? "&ignored_status=notignored_only" : "")
+                        + (useOAuth ? "&not_found_by=" + excludeUUID : "");
 
         String http;
         if (useOAuth) {
@@ -273,29 +297,31 @@ public class OKAPI {
         ArrayList<Geocache> caches = new ArrayList<Geocache>();
         for (String code : document.getResults()) {
             try {
-                Geocache g = getCacheBuffered(code, okapiCacheDetailsCache);
+                final Geocache g = getCacheBuffered(code, okapiCacheDetailsCache);
                 if (g != null) {
                     caches.add(g);
                 }
-            }
-            catch (MalFormedException ex) {
+            } catch (MalFormedException ex) {
                 ExceptionPanel.display(ex);
             }
         }
         return caches;
     }
 
-
     public static void updateFoundStatus(TokenProviderI tp, Geocache oc)
-        throws MalFormedException, IOException, InterruptedException, ExecutionException {
-        if (tp == null)
+            throws MalFormedException, IOException, InterruptedException, ExecutionException {
+        if (tp == null) {
             return;
+        }
 
-        final String url = BASE_URL
-                           + "/caches/geocache"
-                           + "?consumer_key=" + CONSUMER_API_KEY
-                           + "&cache_code=" + oc.getCode()
-                           + "&fields=is_found";
+        final String url =
+                BASE_URL
+                        + "/caches/geocache"
+                        + "?consumer_key="
+                        + CONSUMER_API_KEY
+                        + "&cache_code="
+                        + oc.getCode()
+                        + "&fields=is_found";
         final String http = authedHttpGet(tp, url);
 
         final FoundStatusDocument document = new Gson().fromJson(http, FoundStatusDocument.class);
@@ -303,10 +329,8 @@ public class OKAPI {
     }
 
     public static String getUUID(TokenProviderI tp)
-        throws MalFormedException, IOException, InterruptedException, ExecutionException {
-        final String url = BASE_URL
-                           + "/users/user"
-                           + "?fields=uuid";
+            throws MalFormedException, IOException, InterruptedException, ExecutionException {
+        final String url = BASE_URL + "/users/user" + "?fields=uuid";
         final String http = authedHttpGet(tp, url);
 
         final UUIDDocument document = new Gson().fromJson(http, UUIDDocument.class);
@@ -317,10 +341,8 @@ public class OKAPI {
     }
 
     public static String getUsername(TokenProviderI tp)
-        throws MalFormedException, IOException, InterruptedException, ExecutionException {
-        final String url = BASE_URL
-                           + "/users/user"
-                           + "?fields=username";
+            throws MalFormedException, IOException, InterruptedException, ExecutionException {
+        final String url = BASE_URL + "/users/user" + "?fields=username";
         final String http = authedHttpGet(tp, url);
 
         final UsernameDocument document = new Gson().fromJson(http, UsernameDocument.class);
@@ -331,20 +353,25 @@ public class OKAPI {
     }
 
     public static void postLog(TokenProviderI tp, Geocache cache, GeocacheLog log)
-        throws MalFormedException, InterruptedException, ExecutionException, IOException {
-        String url = BASE_URL
-                     + "/logs/submit"
-                     + "?format=json"
-                     + "&cache_code=" + URLEncoder.encode(cache.getCode(), "UTF-8")
-                     + "&logtype=" + URLEncoder.encode("Found it", "UTF-8")
-                     + "&comment=" + URLEncoder.encode(log.getText(), "UTF-8")
-                     + "&when=" + URLEncoder.encode(log.getDateStrISO8601NoTime(), "UTF-8");
+            throws MalFormedException, InterruptedException, ExecutionException, IOException {
+        String url =
+                BASE_URL
+                        + "/logs/submit"
+                        + "?format=json"
+                        + "&cache_code="
+                        + URLEncoder.encode(cache.getCode(), "UTF-8")
+                        + "&logtype="
+                        + URLEncoder.encode("Found it", "UTF-8")
+                        + "&comment="
+                        + URLEncoder.encode(log.getText(), "UTF-8")
+                        + "&when="
+                        + URLEncoder.encode(log.getDateStrISO8601NoTime(), "UTF-8");
 
         /*if (cache.doesRequirePassword()) {
             url += "&password=" + URLEncoder.encode(log.getPassword(), "UTF-8");
         }*/
 
-        //System.out.println(url);
+        // System.out.println(url);
 
         final String response = authedHttpGet(tp, url);
 
@@ -355,23 +382,24 @@ public class OKAPI {
         }*/
     }
 
-
     public static Coordinate getHomeCoordinates(TokenProviderI tp)
-        throws MalFormedException, IOException, InterruptedException, ExecutionException {
-        String uuid = getUUID(tp);
+            throws MalFormedException, IOException, InterruptedException, ExecutionException {
+        final String uuid = getUUID(tp);
 
-        String url = BASE_URL
-                     + "/users/user"
-                     + "?format=xmlmap2"
-                     + "&fields=home_location"
-                     + "&user_uuid=" + uuid;
-        String http = authedHttpGet(tp, url);
+        final String url =
+                BASE_URL
+                        + "/users/user"
+                        + "?format=xmlmap2"
+                        + "&fields=home_location"
+                        + "&user_uuid="
+                        + uuid;
+        final String http = authedHttpGet(tp, url);
 
         // <object><string key="home_location">53.047117|9.608</string></object>
-        Element root = Parser.parse(http);
-        for (Element e : root.getChild("object").getChildren()) {
+        final Element root = Parser.parse(http);
+        for (final Element e : root.getChild("object").getChildren()) {
             if (e.attrIs("key", "home_location")) {
-                String[] parts = e.getUnescapedBody().split("\\|");
+                final String[] parts = e.getUnescapedBody().split("\\|");
                 return new Coordinate(parts[0], parts[1]);
             }
         }

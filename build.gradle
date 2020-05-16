@@ -1,6 +1,9 @@
-// Apply the versions plugin to check for module dependency updates.
 plugins {
+    // Apply the versions plugin to check for module dependency updates.
     id 'com.github.ben-manes.versions' version '0.28.0'
+
+    // Apply the Google Java formatter plugin for automatically reformatting files.
+    id 'com.github.sherter.google-java-format' version '0.8'
 }
 
 // Apply the java plugin to add support for Java.
@@ -10,14 +13,18 @@ apply plugin: 'java'
 apply plugin: 'application'
 
 // Apply the versions plugin.
+// Use it with the `dependencyUpdates` task.
 apply plugin: 'com.github.ben-manes.versions'
+
+// Apply the autoformatter plugin.
+// Use it with the `googleJavaFormat` and `verifyGoogleJavaFormat` tasks.
+apply plugin: 'com.github.sherter.google-java-format'
 
 // In this section you declare where to find the dependencies of your project.
 repositories {
     // Use jcenter for resolving your dependencies.
     // You can declare any Maven/Ivy/file repository here.
     jcenter()
-    //mavenCentral()
     
     maven {
         url 'https://josm.openstreetmap.de/nexus/content/groups/public/'
@@ -104,10 +111,21 @@ clean.doFirst {
 
 jar {
     archiveBaseName = 'cm'
-    manifest { attributes 'Main-Class': mainClassName }
+    manifest {
+        attributes 'Main-Class': mainClassName
+    }
     duplicatesStrategy = DuplicatesStrategy.INCLUDE // allow duplicates
 
     from {
-        configurations.compileClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+        configurations.compileClasspath.collect {
+            it.isDirectory() ? it : zipTree(it)
+        }
     }
+}
+
+// Formatter options.
+googleJavaFormat {
+    // Use the Android style which uses 4 spaces for indentation.
+    // The default Google style would use 2 spaces which is too small in my opinion.
+    options style: 'AOSP'
 }

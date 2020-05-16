@@ -1,17 +1,13 @@
 package cmanager.geo;
 
-
-import java.io.Serializable;
-import java.util.ArrayList;
-
-import org.joda.time.DateTime;
-
 import cmanager.global.Constants;
 import cmanager.util.ObjectHelper;
+import java.io.Serializable;
+import java.util.ArrayList;
+import org.joda.time.DateTime;
 
+public class Geocache implements Serializable, Comparable<String> {
 
-public class Geocache implements Serializable, Comparable<String>
-{
     private static final long serialVersionUID = 6173771530979347662L;
 
     private String code;
@@ -41,13 +37,22 @@ public class Geocache implements Serializable, Comparable<String>
     private ArrayList<GeocacheLog> logs = new ArrayList<GeocacheLog>();
     private ArrayList<Waypoint> wps = new ArrayList<Waypoint>();
 
-
-    public Geocache(String code, String name, Coordinate coordinate, Double difficulty,
-                    Double terrain, String type) throws NullPointerException
-    {
-        if (code == null || name == null || coordinate == null || difficulty == null ||
-            terrain == null || type == null)
+    public Geocache(
+            String code,
+            String name,
+            Coordinate coordinate,
+            Double difficulty,
+            Double terrain,
+            String type)
+            throws NullPointerException {
+        if (code == null
+                || name == null
+                || coordinate == null
+                || difficulty == null
+                || terrain == null
+                || type == null) {
             throw new NullPointerException();
+        }
 
         this.code = code;
         this.name = name;
@@ -57,29 +62,34 @@ public class Geocache implements Serializable, Comparable<String>
         this.type = new GeocacheType(type);
     }
 
-    public String toString()
-    {
-        return difficulty.toString() + "/" + terrain.toString() + " " + code + " (" +
-            type.asNiceType() + ") -- " + coordinate.toString() + " -- " + name;
+    public String toString() {
+        return difficulty.toString()
+                + "/"
+                + terrain.toString()
+                + " "
+                + code
+                + " ("
+                + type.asNiceType()
+                + ") -- "
+                + coordinate.toString()
+                + " -- "
+                + name;
     }
 
-    public boolean hasVolatileStart()
-    {
+    public boolean hasVolatileStart() {
         return this.type.equals(GeocacheType.getMysteryType());
     }
 
-    public void update(Geocache g)
-    {
+    public void update(Geocache g) {
         update(g, true, true);
     }
 
-    public void update(Geocache g, boolean override, boolean copyLogs)
-    {
-        if (!code.equals(g.code))
+    public void update(Geocache g, boolean override, boolean copyLogs) {
+        if (!code.equals(g.code)) {
             return;
+        }
 
-        if (override)
-        {
+        if (override) {
             name = ObjectHelper.getBest(name, g.name);
             coordinate = ObjectHelper.getBest(coordinate, g.coordinate);
             difficulty = ObjectHelper.getBest(this.getDifficulty(), g.getDifficulty());
@@ -96,19 +106,18 @@ public class Geocache implements Serializable, Comparable<String>
 
             attributes = ObjectHelper.getBest(attributes, g.attributes);
         }
-        if (copyLogs)
-        {
-            for (GeocacheLog newLog : g.logs)
-            {
+        if (copyLogs) {
+            for (final GeocacheLog newLog : g.logs) {
                 boolean match = false;
-                for (GeocacheLog oldLog : logs)
-                    if (newLog.equals(oldLog))
-                    {
+                for (final GeocacheLog oldLog : logs) {
+                    if (newLog.equals(oldLog)) {
                         match = true;
                         break;
                     }
-                if (!match)
+                }
+                if (!match) {
                     logs.add(newLog);
+                }
             }
         }
     }
@@ -124,238 +133,204 @@ public class Geocache implements Serializable, Comparable<String>
         return null;
     }
 
-    public String statusAsString()
-    {
-        if (archived == null || available == null)
+    public String statusAsString() {
+        if (archived == null || available == null) {
             return null;
+        }
 
-        if (archived)
+        if (archived) {
             return "archived";
-        if (available)
+        }
+        if (available) {
             return "available";
+        }
         return "disabled";
     }
 
-    public boolean isOC()
-    {
+    public boolean isOC() {
         return code.substring(0, 2).toUpperCase().equals("OC");
     }
 
-    public boolean isGC()
-    {
+    public boolean isGC() {
         return code.substring(0, 2).toUpperCase().equals("GC");
     }
 
-    public void add(GeocacheLog gl)
-    {
+    public void add(GeocacheLog gl) {
         logs.add(gl);
     }
 
-    public void add(ArrayList<GeocacheLog> logs)
-    {
-        for (GeocacheLog gl : logs)
+    public void add(ArrayList<GeocacheLog> logs) {
+        for (final GeocacheLog gl : logs) {
             this.logs.add(gl);
+        }
     }
 
-    public ArrayList<GeocacheLog> getLogs()
-    {
+    public ArrayList<GeocacheLog> getLogs() {
         return logs;
     }
 
-    public DateTime getMostRecentFoundLog(String usernameGC, String usernameOC)
-    {
+    public DateTime getMostRecentFoundLog(String usernameGC, String usernameOC) {
         GeocacheLog mostRecentLog = null;
-        for (GeocacheLog log : logs)
-        {
-            if (log.isFoundLog())
-                if ((usernameGC != null && log.isAuthor(usernameGC)) ||
-                    (usernameOC != null && log.isAuthor(usernameOC)))
-                {
-                    if (mostRecentLog == null)
+        for (final GeocacheLog log : logs) {
+            if (log.isFoundLog()) {
+                if ((usernameGC != null && log.isAuthor(usernameGC))
+                        || (usernameOC != null && log.isAuthor(usernameOC))) {
+                    if (mostRecentLog == null) {
                         mostRecentLog = log;
-                    else if (log.getDate().isAfter(mostRecentLog.getDate()))
+                    } else if (log.getDate().isAfter(mostRecentLog.getDate())) {
                         mostRecentLog = log;
+                    }
                 }
+            }
         }
         return mostRecentLog == null ? null : mostRecentLog.getDate();
     }
 
-    public void add(Waypoint wp)
-    {
+    public void add(Waypoint wp) {
         wp.setParent(code);
         wps.add(wp);
     }
 
-    public void addWaypoints(ArrayList<GeocacheAttribute> attributes)
-    {
-        for (GeocacheAttribute a : attributes)
+    public void addWaypoints(ArrayList<GeocacheAttribute> attributes) {
+        for (final GeocacheAttribute a : attributes) {
             this.addAttribute(a);
+        }
     }
 
-    public ArrayList<GeocacheAttribute> getAttributes()
-    {
+    public ArrayList<GeocacheAttribute> getAttributes() {
         return attributes;
     }
 
-    public void addAttribute(GeocacheAttribute a)
-    {
+    public void addAttribute(GeocacheAttribute a) {
         attributes.add(a);
     }
 
-
-    public ArrayList<Waypoint> getWaypoints()
-    {
+    public ArrayList<Waypoint> getWaypoints() {
         return wps;
     }
 
-    public void setId(Integer id)
-    {
+    public void setId(Integer id) {
         this.id = id;
     }
 
-    public Integer getId()
-    {
+    public Integer getId() {
         return id;
     }
 
-    public Integer getFavPoints()
-    {
+    public Integer getFavPoints() {
         return favPoints;
     }
-    public void setFavPoints(Integer favPoints)
-    {
+
+    public void setFavPoints(Integer favPoints) {
         this.favPoints = favPoints;
     }
 
-    public Boolean getGcPremium()
-    {
+    public Boolean getGcPremium() {
         return gcPremium;
     }
-    public void setGcPremium(Boolean gcPremium)
-    {
+
+    public void setGcPremium(Boolean gcPremium) {
         this.gcPremium = gcPremium;
     }
 
-    public void setArchived(Boolean archived)
-    {
+    public void setArchived(Boolean archived) {
         this.archived = archived;
     }
 
-    public Boolean getArchived()
-    {
+    public Boolean getArchived() {
         return archived;
     }
 
-    public void setAvailable(Boolean available)
-    {
+    public void setAvailable(Boolean available) {
         this.available = available;
     }
 
-    public Boolean getAvailable()
-    {
+    public Boolean getAvailable() {
         return available;
     }
 
-    public void setHint(String hint)
-    {
+    public void setHint(String hint) {
         this.hint = hint;
     }
 
-    public String getHint()
-    {
+    public String getHint() {
         return hint;
     }
 
-    public void setCodeGC(String gc)
-    {
+    public void setCodeGC(String gc) {
         code_gc = gc;
     }
 
-    public String getCodeGC()
-    {
+    public String getCodeGC() {
         return code_gc;
     }
 
-    public String getCode()
-    {
+    public String getCode() {
         return code;
     }
 
-    public String getName()
-    {
+    public String getName() {
         return name;
     }
 
-    public Coordinate getCoordinate()
-    {
+    public Coordinate getCoordinate() {
         return coordinate;
     }
 
-    public Double getDifficulty()
-    {
+    public Double getDifficulty() {
         return difficulty;
     }
 
-    public Double getTerrain()
-    {
+    public Double getTerrain() {
         return terrain;
     }
 
-    public GeocacheType getType()
-    {
+    public GeocacheType getType() {
         return type;
     }
 
-    public String getOwner()
-    {
+    public String getOwner() {
         return owner;
     }
 
-    public void setOwner(String owner)
-    {
+    public void setOwner(String owner) {
         this.owner = owner;
     }
 
-    public String getListing()
-    {
+    public String getListing() {
         return listing;
     }
 
-    public void setListing(String listing)
-    {
+    public void setListing(String listing) {
         this.listing = listing;
     }
 
-    public GeocacheContainerType getContainer()
-    {
+    public GeocacheContainerType getContainer() {
         return this.container;
     }
 
-    public void setContainer(String container)
-    {
+    public void setContainer(String container) {
         this.container = new GeocacheContainerType(container);
     }
 
-    public String getListing_short()
-    {
+    public String getListing_short() {
         return listing_short;
     }
-    public void setListing_short(String listing_short)
-    {
+
+    public void setListing_short(String listing_short) {
         this.listing_short = listing_short;
     }
-    public Boolean getIsFound()
-    {
+
+    public Boolean getIsFound() {
         return isFound;
     }
-    public void setIsFound(Boolean isFound)
-    {
+
+    public void setIsFound(Boolean isFound) {
         this.isFound = isFound;
     }
 
     @Override
-    public int compareTo(String s)
-    {
+    public int compareTo(String s) {
         return code.compareTo(s);
     }
 

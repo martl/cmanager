@@ -1,7 +1,7 @@
 package cmanager.okapi.responses;
 
-public class CacheDocument
-{
+public class CacheDocument {
+
     private String code;
     private String name;
     private String location;
@@ -11,36 +11,35 @@ public class CacheDocument
     private Double terrain;
     private String status;
 
-    public String getCode()
-    {
+    public String getCode() {
         return code;
     }
-    public String getName()
-    {
+
+    public String getName() {
         return name;
     }
-    public String getLocation()
-    {
+
+    public String getLocation() {
         return location;
     }
-    public String getType()
-    {
+
+    public String getType() {
         return type;
     }
-    public String getGc_code()
-    {
+
+    public String getGc_code() {
         return gc_code;
     }
-    public Double getDifficulty()
-    {
+
+    public Double getDifficulty() {
         return difficulty;
     }
-    public Double getTerrain()
-    {
+
+    public Double getTerrain() {
         return terrain;
     }
-    public String getStatus()
-    {
+
+    public String getStatus() {
         return status;
     }
 }

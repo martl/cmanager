@@ -1,16 +1,15 @@
 package cmanager.okapi.responses;
 
-public class CachesAroundDocument
-{
+public class CachesAroundDocument {
+
     private String[] results;
     private boolean more;
 
-    public String[] getResults()
-    {
+    public String[] getResults() {
         return results;
     }
-    public boolean isMore()
-    {
+
+    public boolean isMore() {
         return more;
     }
 }
