@@ -87,8 +87,9 @@ public class ShadowList {
     }
 
     public void postToShadowList(Geocache gc, Geocache oc) throws Exception {
+        // TODO: Enable once the API is working again.
         // do not repost items which are already upstream
-        if (contains(gc.getCode())) {
+        /*if (contains(gc.getCode())) {
             return;
         }
 
@@ -115,6 +116,6 @@ public class ShadowList {
 
         // remember our post
         new File(SHADOWLIST_POSTED_FOLDER).mkdirs();
-        f.createNewFile();
+        f.createNewFile();*/
     }
 }
