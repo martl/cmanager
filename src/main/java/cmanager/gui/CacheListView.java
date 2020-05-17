@@ -7,7 +7,7 @@ import cmanager.geo.Geocache;
 import cmanager.geo.GeocacheType;
 import cmanager.global.Compatibility;
 import cmanager.global.Constants;
-import cmanager.osm.PersitentTileCache;
+import cmanager.osm.PersistentTileCache;
 import cmanager.util.DesktopUtil;
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -120,7 +120,7 @@ public class CacheListView extends JInternalFrame {
         panelMap.setLayout(new BorderLayout(0, 0));
 
         mapViewer =
-                new CustomJMapViewer(new PersitentTileCache(Constants.CACHE_FOLDER + "maps.osm/"));
+                new CustomJMapViewer(new PersistentTileCache(Constants.CACHE_FOLDER + "maps.osm/"));
         mapViewer.setFocusable(true);
         panelMap.add(mapViewer, BorderLayout.CENTER);
 
@@ -134,7 +134,7 @@ public class CacheListView extends JInternalFrame {
 
         // Make map movable with mouse
         final DefaultMapController mapController = new DefaultMapController(mapViewer);
-        mapController.setMovementMouseButton(MouseEvent.BUTTON2);
+        mapController.setMovementMouseButton(MouseEvent.BUTTON3);
 
         mapViewer.addMouseListener(
                 new MouseAdapter() {
@@ -144,6 +144,11 @@ public class CacheListView extends JInternalFrame {
 
                         if (e.getButton() == MouseEvent.BUTTON1) {
                             final Point p = e.getPoint();
+
+                            // Handle attribution clicks.
+                            mapViewer.getAttribution().handleAttribution(p, true);
+
+                            // Handle geocaches.
                             final Geocache g = getMapFocusedCache(p);
                             if (g == null) {
                                 return;
@@ -411,11 +416,11 @@ public class CacheListView extends JInternalFrame {
 
             setName("");
 
-            if (g.getType() == GeocacheType.getTradiType()) {
+            if (g.getType().equals(GeocacheType.getTradiType())) {
                 setColor(new Color(0x009900));
-            } else if (g.getType() == GeocacheType.getMultiType()) {
+            } else if (g.getType().equals(GeocacheType.getMultiType())) {
                 setColor(new Color(0xFFCC00));
-            } else if (g.getType() == GeocacheType.getMysteryType()) {
+            } else if (g.getType().equals(GeocacheType.getMysteryType())) {
                 setColor(new Color(0x0066FF));
             } else {
                 setColor(Color.GRAY);

@@ -1,6 +1,7 @@
 package cmanager.gui;
 
 import cmanager.global.Constants;
+import cmanager.osm.TileAttribution;
 import java.awt.BasicStroke;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -22,9 +23,15 @@ public class CustomJMapViewer extends JMapViewer {
     public CustomJMapViewer(TileCache cache) {
         super(cache);
 
+        // See https://operations.osmfoundation.org/policies/tiles/ for the following requirements.
+
+        // Custom user agent.
         final Map<String, String> headers = new HashMap<>();
         headers.put("User-Agent", Constants.HTTP_USER_AGENT);
         super.setTileLoader(new OsmTileLoader(this, headers));
+
+        // Add attribution.
+        this.attribution.initialize(new TileAttribution());
     }
 
     public void setPoints(Point p1, Point p2) {

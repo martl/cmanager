@@ -14,7 +14,7 @@ import org.openstreetmap.gui.jmapviewer.interfaces.ICoordinate;
 import org.openstreetmap.gui.jmapviewer.interfaces.TileCache;
 import org.openstreetmap.gui.jmapviewer.interfaces.TileSource;
 
-public class PersitentTileCache implements TileCache {
+public class PersistentTileCache implements TileCache {
 
     String path;
 
@@ -24,7 +24,7 @@ public class PersitentTileCache implements TileCache {
     private boolean online = false;
     private boolean firstTileServed = false;
 
-    public PersitentTileCache(String path) {
+    public PersistentTileCache(String path) {
         this.path = path + "/";
     }
 
