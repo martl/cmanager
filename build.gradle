@@ -4,6 +4,9 @@ plugins {
 
     // Apply the Google Java formatter plugin for automatically reformatting files.
     id 'com.github.sherter.google-java-format' version '0.8'
+
+    // Create runtime images.
+    id 'org.beryx.runtime' version '1.8.4'
 }
 
 // Apply the java plugin to add support for Java.
@@ -128,4 +131,27 @@ googleJavaFormat {
     // Use the Android style which uses 4 spaces for indentation.
     // The default Google style would use 2 spaces which is too small in my opinion.
     options style: 'AOSP'
+}
+
+// Package generation options.
+runtime {
+    // Options to pass to `jlink`.
+    options = ['--strip-debug', '--compress', '2', '--no-header-files', '--no-man-pages']
+
+    // The modules to include.
+    modules = [
+        // From task `suggestModules`.
+        'java.scripting', 'java.xml', 'java.desktop', 'java.logging', 'java.sql', 'java.security.jgss', 'java.naming',
+        // See https://stackoverflow.com/questions/55439599/.
+        'jdk.crypto.ec',
+    ]
+
+    // Configuration for `jpackage`.
+    jpackage {
+        imageName = 'cmanager'
+        imageOptions = ['--win-console']
+
+        // Do not create an installer.
+        skipInstaller = true
+    }
 }

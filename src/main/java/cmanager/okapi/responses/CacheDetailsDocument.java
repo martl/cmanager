@@ -2,7 +2,7 @@ package cmanager.okapi.responses;
 
 public class CacheDetailsDocument {
 
-    private class Owner {
+    private static class Owner {
 
         String uuid;
         String username;

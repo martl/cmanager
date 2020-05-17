@@ -2,16 +2,8 @@ package cmanager.oc;
 
 import cmanager.geo.Geocache;
 import cmanager.global.Constants;
-import cmanager.global.Version;
-import cmanager.network.HTTP;
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.net.URL;
-import java.nio.channels.Channels;
-import java.nio.channels.ReadableByteChannel;
 import java.util.HashMap;
-import org.joda.time.DateTime;
 
 public class ShadowList {
 
@@ -21,8 +13,9 @@ public class ShadowList {
             Constants.CACHE_FOLDER + "OC.shadowlist.posted";
 
     public static void updateShadowList() throws IOException {
+        // TODO: Enable once the API is working again.
         // delete list if it is older than 1 month
-        final File file = new File(SHADOWLIST_PATH);
+        /*final File file = new File(SHADOWLIST_PATH);
         if (file.exists()) {
             DateTime fileTime = new DateTime(file.lastModified());
             final DateTime now = new DateTime();
@@ -41,7 +34,7 @@ public class ShadowList {
         ReadableByteChannel rbc = Channels.newChannel(url.openStream());
         FileOutputStream fos = new FileOutputStream(SHADOWLIST_PATH);
         fos.getChannel().transferFrom(rbc, 0, Long.MAX_VALUE);
-        fos.close();
+        fos.close();*/
     }
 
     public static ShadowList loadShadowList() throws Throwable {

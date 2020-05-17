@@ -4,9 +4,9 @@ import java.util.ArrayList;
 
 public class ErrorDocument {
 
-    private class Error {
+    private static class Error {
 
-        String developer_message = "hallo";
+        String developer_message;
         ArrayList<String> reason_stack;
         int status;
         String parameter;

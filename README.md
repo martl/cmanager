@@ -9,14 +9,13 @@ Further information in German:
 
 ## License & Source Code
 
-`cmanager` is distributed under the [The GNU General Public License v3](http://www.gnu.org/licenses/gpl-3.0-standalone.html).
-The sources are available on GitHub ([link](https://github.com/FriedrichFroebel/cmanager)).
+`cmanager` is distributed under the terms of [The GNU General Public License v3](http://www.gnu.org/licenses/gpl-3.0-standalone.html). The sources are available on GitHub ([link](https://github.com/FriedrichFroebel/cmanager)).
 
 This version is a fork of the [original repository by Samsung1](https://github.com/RoffelKartoffel/cmanager). While the original version discontinued support for the log transfer functionality itself, this fork tries to keep it working. Additionally some problems of the original version have been fixed.
 
 ## Distribution / "Download"
 
-Releases are published on GitHubs as ["Releases"](https://github.com/FriedrichFroebel/cmanager/releases).
+Releases are published on GitHub as ["Releases"](https://github.com/FriedrichFroebel/cmanager/releases).
 
 ## Building from Source
 
@@ -41,6 +40,12 @@ Run `gradle build` from the root directory of the Git repository (or use `./grad
 
 To create a JAR file, run `gradle jar` (or `./gradlew jar`). The JAR file will be located in `build/libs`.
 
+### Java-independent packages
+
+There is experimental support for bundling the application in a way that no local Java installation is needed for executing it.
+
+To create the corresponding image, run `gradle jpackageImage` (or `./gradlew jpackageImage`). The image will be available inside the `build/jpackage/cmanager` directory. You might want to put this directory into a dedicated archive file for redistribution. **Please note that this an incubating feature of Java 14, so at least Java 14 is required and might break due to API changes.**
+
 ## Usage
 
 ### Starting the application with Gradle
@@ -49,4 +54,8 @@ Run `gradle run` (or `./gradlew run`) from the root directory of the Git reposit
 
 ### Starting the application JAR file
 
-Run `java -jar cm-0.2.46.jar` from the directory containing the JAR file.
+Run `java -jar cm-0.2.47.jar` from the directory containing the JAR file.
+
+### Starting the Java-independent package
+
+Double-click on `cmanager.exe` from the directory containing this package. *Please note that this version is not being distributed in the release section at the moment.*
