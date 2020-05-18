@@ -710,7 +710,26 @@ public class MainWindow extends JFrame {
         }
     }
 
+    /**
+     * Display a "Please stand-by" dialog with a static delay of 25 milliseconds.
+     *
+     * @param task The task to execute with this wait dialog.
+     * @param parent The parent component.
+     */
     public static void actionWithWaitDialog(final Runnable task, Component parent) {
+        MainWindow.actionWithWaitDialog(task, parent, 25);
+    }
+
+    /**
+     * Display a "Please stand-by" dialog with a configurable delay.
+     *
+     * @param task The task to execute with this wait dialog.
+     * @param parent The parent component.
+     * @param delayMilliseconds The delay in milliseconds. If this time has not passed, the dialog
+     *     will not be closed.
+     */
+    public static void actionWithWaitDialog(
+            final Runnable task, Component parent, final int delayMilliseconds) {
         final WaitDialog wait = new WaitDialog();
 
         wait.setModalityType(ModalityType.APPLICATION_MODAL);
@@ -721,7 +740,7 @@ public class MainWindow extends JFrame {
                             public void run() {
                                 while (!wait.isVisible()) {
                                     try {
-                                        Thread.sleep(25);
+                                        Thread.sleep(delayMilliseconds);
                                     } catch (InterruptedException e) {
                                     }
                                 }
