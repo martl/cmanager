@@ -54,7 +54,7 @@ project.ext.ocOkapiPropertiesFile = projectDir.getPath() + "${File.separator}oc_
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
-version = '0.2.47'
+version = '0.2.48'
 
 wrapper {
     gradleVersion = '6.4'
@@ -155,3 +155,21 @@ runtime {
         skipInstaller = true
     }
 }
+
+// Retrieve the system string for indicating the package content.
+def getSystemString() {
+    def osName = System.properties['os.name'].toLowerCase()
+    if (osName.contains('windows')) return 'windows';
+    return osName;
+}
+
+// Provide a dedicated task to create a ZIP file of the `jpackage` image.
+task jpackageImageZip(type: Zip) {
+    group = 'Build'
+    description = 'Bundles the jpackage image as a ZIP file.'
+    from "${buildDir}/jpackage/cmanager"
+    include '**/*'
+    archiveName "cmanager-${version}_${getSystemString()}.zip"
+    destinationDir file("${buildDir}/jpackage/")
+}
+jpackageImageZip.dependsOn jpackageImage

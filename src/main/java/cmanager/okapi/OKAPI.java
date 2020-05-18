@@ -14,7 +14,9 @@ import cmanager.okapi.responses.CacheDocument;
 import cmanager.okapi.responses.CachesAroundDocument;
 import cmanager.okapi.responses.ErrorDocument;
 import cmanager.okapi.responses.FoundStatusDocument;
+import cmanager.okapi.responses.LogSubmissionDocument;
 import cmanager.okapi.responses.UUIDDocument;
+import cmanager.okapi.responses.UnexpectedLogStatus;
 import cmanager.okapi.responses.UsernameDocument;
 import cmanager.xml.Element;
 import cmanager.xml.Parser;
@@ -353,7 +355,8 @@ public class OKAPI {
     }
 
     public static void postLog(TokenProviderI tp, Geocache cache, GeocacheLog log)
-            throws MalFormedException, InterruptedException, ExecutionException, IOException {
+            throws MalFormedException, InterruptedException, ExecutionException, IOException,
+                    UnexpectedLogStatus {
         String url =
                 BASE_URL
                         + "/logs/submit"
@@ -361,7 +364,7 @@ public class OKAPI {
                         + "&cache_code="
                         + URLEncoder.encode(cache.getCode(), "UTF-8")
                         + "&logtype="
-                        + URLEncoder.encode("Found it", "UTF-8")
+                        + URLEncoder.encode(log.getTypeStr(), "UTF-8")
                         + "&comment="
                         + URLEncoder.encode(log.getText(), "UTF-8")
                         + "&when="
@@ -375,11 +378,15 @@ public class OKAPI {
 
         final String response = authedHttpGet(tp, url);
 
-        /*final LogSubmissionDocument document = new Gson().fromJson(response, LogSubmissionDocument.class);
-        if (document == null) return;
+        final LogSubmissionDocument document =
+                new Gson().fromJson(response, LogSubmissionDocument.class);
+        if (document == null) {
+            System.out.println("Problems with handling posted log. Response document is null.");
+            return;
+        }
         if (!document.isSuccess()) {
-            System.out.println("Error while logging cache: " + document.getMessage());
-        }*/
+            throw new UnexpectedLogStatus(document.getMessage());
+        }
     }
 
     public static Coordinate getHomeCoordinates(TokenProviderI tp)

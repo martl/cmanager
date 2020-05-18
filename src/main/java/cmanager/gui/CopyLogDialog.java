@@ -6,6 +6,7 @@ import cmanager.geo.GeocacheLog;
 import cmanager.oc.ShadowList;
 import cmanager.okapi.OKAPI;
 import cmanager.okapi.User;
+import cmanager.okapi.responses.UnexpectedLogStatus;
 import cmanager.settings.Settings;
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -123,10 +124,16 @@ public class CopyLogDialog extends JFrame {
 
                                                 // copy the log
                                                 OKAPI.postLog(User.getOKAPIUser(), oc, log);
-                                                // remember that we copied the log so the
-                                                // user can not
-                                                // double post it by accident
+                                                // remember that we copied the log so the user can
+                                                // not double post it by accident
                                                 logsCopied.add(log);
+                                            } catch (UnexpectedLogStatus exception) {
+                                                // Handle general log problems separately to provide
+                                                // a better error message.
+                                                ExceptionPanel.showErrorDialog(
+                                                        THIS,
+                                                        exception.getResponseMessage(),
+                                                        "Unexpected log status");
                                             } catch (Throwable t) {
                                                 ExceptionPanel.showErrorDialog(THIS, t);
                                             }

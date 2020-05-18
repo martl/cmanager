@@ -44,7 +44,7 @@ To create a JAR file, run `gradle jar` (or `./gradlew jar`). The JAR file will b
 
 There is experimental support for bundling the application in a way that no local Java installation is needed for executing it.
 
-To create the corresponding image, run `gradle jpackageImage` (or `./gradlew jpackageImage`). The image will be available inside the `build/jpackage/cmanager` directory. You might want to put this directory into a dedicated archive file for redistribution. **Please note that this an incubating feature of Java 14, so at least Java 14 is required and might break due to API changes.**
+To create the corresponding image, run `gradle jpackageImage` (or `./gradlew jpackageImage`). The image will be available inside the `build/jpackage/cmanager` directory. You might want to put this directory into a dedicated archive file for redistribution using the `jpackageImageZip` task. **Please note that this an incubating feature of Java 14, so at least Java 14 is required and this feature might break due to API changes.**
 
 ## Usage
 
@@ -54,8 +54,8 @@ Run `gradle run` (or `./gradlew run`) from the root directory of the Git reposit
 
 ### Starting the application JAR file
 
-Run `java -jar cm-0.2.47.jar` from the directory containing the JAR file.
+Run `java -jar cm-0.2.48.jar` from the directory containing the JAR file.
 
 ### Starting the Java-independent package
 
-Double-click on `cmanager.exe` from the directory containing this package. *Please note that this version is not being distributed in the release section at the moment.*
+Double-click on `cmanager.exe` (on Windows) from the directory containing this package. *Please note that this version is not being distributed in the release section at the moment.*
