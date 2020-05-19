@@ -25,27 +25,22 @@ public class DesktopUtil {
 
         // Try opening the browser itself.
         try {
-            // Save the exception message for further handling.
-            Exception exception = null;
-
             // Try to easiest approach at first.
             if (Desktop.isDesktopSupported()) {
                 try {
                     Desktop.getDesktop().browse(uri);
-                } catch (IOException e) {
-                    exception = e;
+                    return;
+                } catch (IOException exception) {
+                    // Add the exception anyway.
+                    ExceptionPanel.display(exception);
                 }
             }
 
-            // If something did not work (an exception occurred or desktop is not supported), add
-            // the exception to the panel, but try the fallback method.
-            if (exception != null) {
-                ExceptionPanel.display(exception);
-                openUrlFallback(uriString);
-            }
-        } catch (UnsupportedOperationException | IOException e) {
+            // If something did not work (an exception occurred or desktop is not supported), try the fallback method.
+            openUrlFallback(uriString);
+        } catch (UnsupportedOperationException | IOException exception) {
             // Both approaches failed, so report the last error from the fallback method.
-            ExceptionPanel.showErrorDialog(null, e);
+            ExceptionPanel.showErrorDialog(null, exception);
         }
     }
 
