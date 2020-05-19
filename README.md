@@ -1,6 +1,6 @@
-# cmanager
+# Cache manager
 
-The cache manager (cmanager) is a Java based program which is able to manage GPX files and synchronize geocache logs from [Geocaching.com](https://geocaching.com) to [Opencaching.de](https://opencaching.de). It therefore loads a GPX file with the users cache founds (e.g. `myfounds.gpx`). After configuring an OKAPI token in the settings, the user is able to match his/her founds against caches listed on Opencaching.de.
+The cache manager (cmanager) is a Java-based program which is able to manage GPX files and synchronize geocache logs from [Geocaching.com](https://geocaching.com) to [Opencaching.de](https://opencaching.de). It therefore loads a GPX file with the users cache founds (e.g. `myfounds.gpx`). After configuring an OKAPI token in the settings, the user is able to match his/her founds against caches listed on Opencaching.de.
 
 Further information in German:
 
@@ -11,7 +11,7 @@ Further information in German:
 
 `cmanager` is distributed under the terms of [The GNU General Public License v3](http://www.gnu.org/licenses/gpl-3.0-standalone.html). The sources are available on GitHub ([link](https://github.com/FriedrichFroebel/cmanager)).
 
-This version is a fork of the [original repository by Samsung1](https://github.com/RoffelKartoffel/cmanager). While the original version discontinued support for the log transfer functionality itself, this fork tries to keep it working. Additionally some problems of the original version have been fixed.
+This version is a fork of the [original repository by Samsung1](https://github.com/RoffelKartoffel/cmanager). While the original version discontinued support for the log transfer functionality itself, this fork tries to keep it working. Additionally some problems of the original version have been fixed. Please note that I do not have any plans on implementing completely new features at the moment, but feel free to open a pull request.
 
 ## Distribution / "Download"
 
