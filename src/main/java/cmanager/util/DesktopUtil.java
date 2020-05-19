@@ -36,7 +36,8 @@ public class DesktopUtil {
                 }
             }
 
-            // If something did not work (an exception occurred or desktop is not supported), try the fallback method.
+            // If something did not work (an exception occurred or desktop is not supported), try
+            // the fallback method.
             openUrlFallback(uriString);
         } catch (UnsupportedOperationException | IOException exception) {
             // Both approaches failed, so report the last error from the fallback method.
