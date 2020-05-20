@@ -63,6 +63,6 @@ deploy:
   overwrite: true
   tag_name: 'prerelease'
   name: 'Automated build'
-  body: 'Automated build of the master branch (commit $TRAVIS_COMMIT) using Travis CI on $(date +'%F %T %Z').'
+  body: "Automated build of the master branch (commit $TRAVIS_COMMIT) using Travis CI on $(date +'%F %T %Z')."
   target_commitish: $TRAVIS_COMMIT
   edge: true
