@@ -57,6 +57,7 @@ deploy:
   cleanup: false
   on:
     tags: false
+    jdk: openjdk14
   prerelease: true
   name: 'Automated build'
   body: 'Automated build of the master branch using Travis CI.'
