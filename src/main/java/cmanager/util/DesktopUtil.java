@@ -32,7 +32,7 @@ public class DesktopUtil {
                     return;
                 } catch (IOException exception) {
                     // Add the exception anyway.
-                    ExceptionPanel.display(exception);
+                    exception.printStackTrace();
                 }
             }
 
