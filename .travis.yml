@@ -61,7 +61,7 @@ deploy:
     jdk: openjdk14
   prerelease: true
   overwrite: true
-  name: 'Automated build'
+  tag_name: 'prerelease'
+  name: 'Development build'
   body: "Automated build of the master branch (commit $TRAVIS_COMMIT) using Travis CI on $(date +'%F %T %Z')."
-  target_commitish: $TRAVIS_COMMIT
   edge: true
