@@ -38,4 +38,4 @@ deploy:
     tags: false
   draft: true
   prerelease: true
- 
+  name: 'Automated build'
