@@ -40,5 +40,5 @@ deploy:
   prerelease: true
   name: 'Automated build'
   tag_name: 'prelease'
-before_deploy:
-  - ls -l $HOME/FriedrichFroebel/cmanager/
+after_deploy:
+  - ls -l $HOME/build/FriedrichFroebel/cmanager/
