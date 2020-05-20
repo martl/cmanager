@@ -6,7 +6,7 @@ dist: xenial
 
 matrix:
   include:
-    - jdk: openjdk8
+    - jdk: openjdk10
 
 script:
   - chmod +x gradlew
