@@ -22,6 +22,7 @@ jobs:
 # In our case we just build the JAR file for now.
 script:
   - chmod +x gradlew
+  - ./gradlew clean
   - ./gradlew jar
 
 # Our global environment variables used as a replacement for providing an `oc_okapi.properties`
