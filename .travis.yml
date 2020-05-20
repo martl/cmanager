@@ -12,6 +12,10 @@ script:
   - chmod +x gradlew
   - ./gradlew build
 
+env:
+  global:
+    - secure: FxN828yydlJfl/6G8EtRxJ3lWAFvMgCiRmX5OpAaV9HVU6DZ8SbkLusN7pX9KBkOsUNZOfAF/iMV9rw/+PYKpeElz0v72nJLYv5diD/wyE5hVP8n95IUzBm3X+KR+gykacsJSGKLoPl1yfNnLidvELLEbiS3KkCOenIFfaa8gqzrqkvT3vlyJhuNa3JqQoDZ81XPzwzWhM0VyXN2/2CkcnjRTWroLmtHcLjYHHW7FwzWJXxMNsTqLJKXjf2bskb+8gDvQ1bcMUETYONdRktDNxgFflp5FWINmkbSvB4U8YZkroXgWAA7RiQcx8VChvFIbWeR17/SR0WFv8YojSqmiwUiKUIuFWDoXK3HslC0TLLjLGiXiyIKCyitfcowsKPY+AgPCtNSlqOvQjohLOR+JJ+epXYxtIobQQuJqkAFZmlO6C8wCjbwZzg3YUkhy2B796sNVqAEW4IqMfhs6Aqy60zez+ovCqmA0fhh516e7SmN3dR1vgxw4WTVm/btXZNy7ff9TqbXCX8h1UPN/AF2g6YsiG+usTANgBTTMead18A5pmx/5gUKH+eiTdrWnbQFzNUz8K3eATAfUwxcUxkHrWI7NaqMbrgLNkvdHZicavqzpO3Koh7aiyIt8+5QCMdyq/ff/YZZUOEqiPLpAu2vVfYtXBv1CZH3RgOMK6N0ilY=
+
 
 # See https://guides.gradle.org/executing-gradle-builds-on-travisci/#enable_caching_of_downloaded_artifacts.
 before_cache:
