@@ -134,6 +134,7 @@ clean.doFirst {
 
 jar {
     archiveBaseName = 'cm'
+    if (System.getProperty('user.name').equals('travis')) version = 'ci'
     manifest {
         attributes 'Main-Class': mainClassName
     }
