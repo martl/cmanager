@@ -39,3 +39,6 @@ deploy:
   draft: true
   prerelease: true
   name: 'Automated build'
+  tag_name: 'prelease'
+after_deploy:
+  - ls -l FriedrichFroebel/cmanager/build/libs
