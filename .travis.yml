@@ -41,4 +41,4 @@ deploy:
   name: 'Automated build'
   tag_name: 'prelease'
 after_deploy:
-  - ls -l $HOME/FriedrichFroebel/cmanager/build/libs
+  - ls -l $HOME/FriedrichFroebel/cmanager/
