@@ -59,6 +59,7 @@ deploy:
     tags: false
     jdk: openjdk14
   prerelease: true
+  tag_name: 'prerelease'
   name: 'Automated build'
   body: 'Automated build of the master branch using Travis CI.'
   edge: true
