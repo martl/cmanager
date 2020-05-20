@@ -1,17 +1,31 @@
 language: java
 install: true
 
+# Use Linux-based builds only.
+# Supporting Windows would allow us to build `jpackage` images automatically to simplify execution
+# on Windows systems, but secrets are not filtered for now.
+# See https://travis-ci.community/t/current-known-issues-please-read-this-before-posting-a-new-topic/264
 os: linux
-dist: xenial
+dist: bionic
 
-matrix:
+# Run compilation tests using the OpenJDK in version 10 and version 14 (the latest one at the time
+# of writing).
+# Please note that we still support Java versions starting with Java 8, but we cannot compile our
+# code with Java 8 as they miss the newer APIs we reference inside the `Compatibility.java` file.
+jobs:
   include:
     - jdk: openjdk10
+    - jdk: openjdk14
 
+# The stuff to execute.
+# By adding the executable bit, we ensure that we can call the Gradle wrapper script directly.
+# In our case we just build the JAR file for now.
 script:
   - chmod +x gradlew
   - ./gradlew jar
 
+# Our global environment variables used as a replacement for providing an `oc_okapi.properties`
+# file.
 # Created using https://github.com/mandeep/Travis-Encrypt.
 env:
   global:
@@ -28,15 +42,22 @@ cache:
     - $HOME/.gradle/caches/
     - $HOME/.gradle/wrapper/
 
+# Deploy the JAR file as a GitHub release for every change on the master branch.
+# We mark this as a pre-release as the current master is usually providing the development
+# version.
+# We already use the new deployment API here, see https://docs.travis-ci.com/user/deployment-v2.
+# TODO: This is not optimal at the moment, as this will not replace the existing release.
+#       Ideally we would have a dedicated `prelease` tag pointing to the latest master
+#       commit and one release which gets updated accordingly.
 deploy:
   provider: releases
-  api_key:
+  token:
     secure: otUfUaVFFFEkKDXPzclAC/UxzwwbuGMAndBiKBanCQ9TmvNKm51hvHc8Xpz+a7Z5FBr1wECvkhXWwvAlTPNHiuBOCD0tHNQR67DiQ7q1OGO0DYt4rKrMWXUKpTxndRYCDWcujdbV7H240nKff/rwXviIugSFZu2KsNAEnDsSg6vve2C9Isf1bUIbZ9VftI1T0f1JFhHEixj9JHpotC4lIOKYxG4M09tJ0rZzuyMZNfAo7/38asmAMzLRke4l52EH6MZ5MMYqZF0XEB6uZINfezQgJ8jWnVsU+v8Vxt5xW1nVNTIIMQuJSKsWrag89ua8BfnO47XGKS/xRQQfwMTWAzy+t2tiOynm6JJJiyArgR1X3In9n5I8fHIGewt5SOmREvR153xBtMe0i2dAvw7A6mD6oRemiGHV24iXK1TcqSenZXBSsqNtirdPWNUyeS7kxRxbKm+a2DARxE5iBl/Es9dGaALMH2z3TU7ECLPDmE7k9/Wyo+3IDUDCuTKOTa6MeewdpJ9q/iZJdCAM9ssaD0WH79UnXwCr9IcuHCFCX44ALTSune3NfNC8UfsGF3BfBEFCAEzZxjpx+5ndj52f4cEdWDcXqjU0ePgDRWOzS9dA180eNJgARzwF73q5WxDDiANfuwlnIi8/KHNRXjeIxrF2kjwa9j+XAIa0We3bDEE=
   file: '$HOME/build/FriedrichFroebel/cmanager/build/libs/cm-ci.jar'
-  skip_cleanup: true
+  cleanup: false
   on:
     tags: false
-  draft: true
   prerelease: true
   name: 'Automated build'
-  tag_name: 'prelease'
+  body: 'Automated build of the master branch using Travis CI.'
+  edge: true
