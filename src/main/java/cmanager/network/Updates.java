@@ -52,12 +52,9 @@ public class Updates {
      * @throws NumberFormatException No suitable version could be found.
      */
     private static String findLatestRelease(Element root) throws NumberFormatException {
-        final ArrayList<Element> children = root.getChild("feed").getChildren();
-        for (final Element element : children) {
-            if (!element.is("entry")) {
-                continue;
-            }
-            final String title = element.getChild("title").getUnescapedBody();
+        final ArrayList<Element> entries = root.getChild("feed").getChildren("entry");
+        for (final Element entry : entries) {
+            final String title = entry.getChild("title").getUnescapedBody();
             if (title != null && !title.isEmpty() && Character.isDigit(title.charAt(0))) {
                 return title;
             }
