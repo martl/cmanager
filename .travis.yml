@@ -65,3 +65,7 @@ deploy:
   name: 'Development build'
   body: "Automated build of the master branch (commit $TRAVIS_COMMIT) using Travis CI on $(date +'%F %T %Z')."
   edge: true
+
+before_deploy:
+  - echo $TRAVIS_BUILD_DIR
+  - git rev-parse --short HEAD
