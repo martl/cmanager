@@ -67,6 +67,7 @@ deploy:
   release_notes: "Automated build of the master branch (commit $TRAVIS_COMMIT) using Travis CI on $(date +'%F %T %Z')."
   edge: true
 
+# Rename the JAR file before deploying it.
+# This will add the short commit hash to the filename to be able to determine the used commit.
 before_deploy:
-  - ls $TRAVIS_BUILD_DIR/
   - cp $TRAVIS_BUILD_DIR/build/libs/cm-ci.jar $HOME/build/cm-$SHORT_HASH.jar
