@@ -188,6 +188,29 @@ public class GeocacheLog implements Serializable {
         return password;
     }
 
+    /**
+     * Get the log type for the OKAPI.
+     *
+     * <p>This is required as the OKAPI does not seem to accept "Webcam Photo Taken" logs for webcam
+     * caches, but requires a "Found it" log.
+     *
+     * @see https://www.opencaching.de/okapi/services/logs/submit.html
+     * @param geocache The geocache instance this log belongs to. This may be needed to distinguish
+     *     the different cache types in the future, but is not used for now.
+     * @return The OKAPI log type.
+     */
+    public String getOkapiType(Geocache geocache) {
+        final String logType = getTypeStr();
+
+        // Webcam caches require a "Found it".
+        if (logType.equals("Webcam Photo Taken")) {
+            return "Found it";
+        }
+
+        // This is no special case.
+        return logType;
+    }
+
     public boolean equals(GeocacheLog log) {
         return type == log.type
                 && date.equals(log.date)

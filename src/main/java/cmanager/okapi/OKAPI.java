@@ -364,7 +364,7 @@ public class OKAPI {
                         + "&cache_code="
                         + URLEncoder.encode(cache.getCode(), "UTF-8")
                         + "&logtype="
-                        + URLEncoder.encode(log.getTypeStr(), "UTF-8")
+                        + URLEncoder.encode(log.getOkapiType(cache), "UTF-8")
                         + "&comment="
                         + URLEncoder.encode(log.getText(), "UTF-8")
                         + "&when="
@@ -378,14 +378,33 @@ public class OKAPI {
 
         final String response = authedHttpGet(tp, url);
 
+        // TODO: We might want to handle another problem here as well, although this should not be
+        // this common.
+        // Currently this is done by catching the NPE below
+        // {"error":{"developer_message":"Parameter 'logtype' has invalid value: 'Webcam Photo
+        // Taken' in not a valid logtype
+        // code.","reason_stack":["bad_request","invalid_parameter"],"status":400,"parameter":"logtype","whats_wrong_about_it":"'Webcam Photo Taken' in not a valid logtype code.","more_info":"https:\/\/www.opencaching.de\/okapi\/introduction.html#errors"}}
+
+        // Retrieve the response document.
         final LogSubmissionDocument document =
                 new Gson().fromJson(response, LogSubmissionDocument.class);
+
+        // The document itself is null.
         if (document == null) {
-            System.out.println("Problems with handling posted log. Response document is null.");
-            return;
+            throw new NullPointerException(
+                    "Problems with handling posted log. Response document is null.");
         }
-        if (!document.isSuccess()) {
-            throw new UnexpectedLogStatus(document.getMessage());
+
+        // Check success status.
+        try {
+            if (!document.isSuccess()) {
+                throw new UnexpectedLogStatus(document.getMessage());
+            }
+        } catch (NullPointerException exception) {
+            // When the OKAPI reports a request error, this will lead to a NPE.
+            System.out.println(response);
+            throw new NullPointerException(
+                    "Could not submit log. Please open an issue for this and add the terminal output to it.");
         }
     }
 
