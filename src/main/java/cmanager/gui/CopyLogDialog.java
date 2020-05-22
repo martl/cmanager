@@ -21,7 +21,6 @@ import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.util.ArrayList;
 import javax.swing.JButton;
-import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -101,16 +100,6 @@ public class CopyLogDialog extends JFrame {
             panelLogs.add(logPanel, gbc);
             gbc.gridy++;
 
-            final GridBagConstraints gbcCheckBox = (GridBagConstraints) gbc.clone();
-            gbcCheckBox.weighty = 0;
-            gbcCheckBox.fill = 0;
-            gbcCheckBox.insets = new Insets(0, 10, 5, 0);
-
-            final JCheckBox checkBox = new JCheckBox("Use original log");
-            checkBox.setSelected(true);
-            panelLogs.add(checkBox, gbcCheckBox);
-            gbc.gridy++;
-
             final GridBagConstraints gbc_button = (GridBagConstraints) gbc.clone();
             gbc_button.weighty = 0;
             gbc_button.fill = 0;
@@ -132,10 +121,8 @@ public class CopyLogDialog extends JFrame {
                                                 // contribute to shadow list
                                                 shadowList.postToShadowList(gc, oc);
 
-                                                // retrieve the new log text if requested
-                                                if (!checkBox.isSelected()) {
-                                                    log.setText(logPanel.getLogText());
-                                                }
+                                                // retrieve the new log text
+                                                log.setText(logPanel.getLogText());
 
                                                 // copy the log
                                                 OKAPI.postLog(User.getOKAPIUser(), oc, log);

@@ -54,10 +54,10 @@ project.ext.ocOkapiPropertiesFile = projectDir.getPath() + "${File.separator}oc_
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
-version = '0.2.48'
+version = '0.4.0'
 
 wrapper {
-    gradleVersion = '6.4'
+    gradleVersion = '6.4.1'
 }
 
 // Allow retrieving the configuration values from environment variables as well.
