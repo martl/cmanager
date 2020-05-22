@@ -68,4 +68,5 @@ deploy:
   edge: true
 
 before_deploy:
+  - ls '$TRAVIS_BUILD_DIR/build/'
   - cp '$TRAVIS_BUILD_DIR/build/libs/cm-ci.jar' '$HOME/build/cm-$SHORT_HASH.jar'
