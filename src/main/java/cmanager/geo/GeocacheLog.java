@@ -85,6 +85,59 @@ public class GeocacheLog implements Serializable {
         this.date = new DateTime(date, DateTimeZone.UTC);
     }
 
+    /**
+     * Set the log text.
+     *
+     * <p>Please note that this may contain HTML code for a complete HTML document when retrieved
+     * from the editor pane, so we have to extract the body here.
+     *
+     * <p>This method may not produce the exact same result as given in the XML file input. We might
+     * want to replace this solution with something like
+     * https://stackoverflow.com/questions/1859686/getting-raw-text-from-jtextpane.
+     *
+     * @param text The text to set.
+     */
+    public void setText(String text) {
+        // Do not set empty log texts.
+        if (text == null || text.isEmpty()) {
+            return;
+        }
+
+        // Use the given text if we have no HTML body tags.
+        if (!text.contains("<body>") || !text.contains("</body>")) {
+            this.text = text;
+            return;
+        }
+
+        // Split on the body start tag and ensure that there actually is a body again.
+        String[] parts = text.split("<body>");
+        if (parts.length != 2) {
+            this.text = text;
+            return;
+        }
+
+        // Retrieve the body itself.
+        final String body = parts[1].split("</body>")[0];
+
+        // Trim all lines.
+        final String[] lines = body.split("\n");
+        final StringBuilder linesBuilder = new StringBuilder();
+        for (final String line : lines) {
+            linesBuilder.append(line.trim());
+            linesBuilder.append("\n");
+        }
+        final String bodyTrim = linesBuilder.toString().trim();
+
+        // If the text is empty, set the original text again.
+        if (bodyTrim.isEmpty()) {
+            this.text = text;
+            return;
+        }
+
+        // Set the body as the new log text.
+        this.text = bodyTrim;
+    }
+
     public String getAuthor() {
         return author;
     }
@@ -133,6 +186,29 @@ public class GeocacheLog implements Serializable {
 
     public String getPassword() {
         return password;
+    }
+
+    /**
+     * Get the log type for the OKAPI.
+     *
+     * <p>This is required as the OKAPI does not seem to accept "Webcam Photo Taken" logs for webcam
+     * caches, but requires a "Found it" log.
+     *
+     * @see https://www.opencaching.de/okapi/services/logs/submit.html
+     * @param geocache The geocache instance this log belongs to. This may be needed to distinguish
+     *     the different cache types in the future, but is not used for now.
+     * @return The OKAPI log type.
+     */
+    public String getOkapiType(Geocache geocache) {
+        final String logType = getTypeStr();
+
+        // Webcam caches require a "Found it".
+        if (logType.equals("Webcam Photo Taken")) {
+            return "Found it";
+        }
+
+        // This is no special case.
+        return logType;
     }
 
     public boolean equals(GeocacheLog log) {

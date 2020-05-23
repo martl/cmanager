@@ -13,15 +13,17 @@ Further information in German:
 
 This version is a fork of the [original repository by Samsung1](https://github.com/RoffelKartoffel/cmanager). While the original version discontinued support for the log transfer functionality itself, this fork tries to keep it working. Additionally some problems of the original version have been fixed. Please note that I do not have any plans on implementing completely new features at the moment, but feel free to open a pull request.
 
-## Distribution / "Download"
+## Distribution/Download
 
 Releases are published on GitHub as ["Releases"](https://github.com/FriedrichFroebel/cmanager/releases).
+
+Besides the regular release, there is a pre-release as well. This will be built by Travis CI on every change to the `master` branch. **Please note that these files (named `cm-ci.jar`) are development versions which might have additional bugs or provide undocumented changes/features. Use them at your own risk!** The Travis integration is still work-in-progress, see [#7](https://github.com/FriedrichFroebel/cmanager/issues/7) for example.
 
 ## Building from Source
 
 ### Prerequisites
 
-- Java development kit (JDK) in version >= 8. I recommend you to use at least Java 10.
+- Java development kit (JDK) in version >= 10. The minimum required Java version to run the application is Java 8 nevertheless, but the `Compatibility.java` file depends on a method introduced in Java 10.
 - You need to provide API keys for compiling `cmanager`. See next section for details.
 
 ### API keys
@@ -48,13 +50,17 @@ To create the corresponding image, run `gradle jpackageImage` (or `./gradlew jpa
 
 ## Usage
 
+### Prerequisites
+
+- Java in version >= 8. I recommend you to use at least Java 10. If you use the `jpackage` image, no own Java installation is needed.
+
 ### Starting the application with Gradle
 
 Run `gradle run` (or `./gradlew run`) from the root directory of the Git repository.
 
 ### Starting the application JAR file
 
-Run `java -jar cm-0.2.48.jar` from the directory containing the JAR file.
+Run `java -jar cm-0.4.0.jar` from the directory containing the JAR file.
 
 ### Starting the Java-independent package
 

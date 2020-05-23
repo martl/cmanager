@@ -3,6 +3,7 @@ package cmanager.network;
 import cmanager.global.Version;
 import cmanager.xml.Element;
 import cmanager.xml.Parser;
+import java.util.ArrayList;
 
 /**
  * Update checking handlers.
@@ -24,9 +25,7 @@ public class Updates {
 
                 final Element root = Parser.parse(http);
 
-                final Element child = root.getChild("feed").getChild("entry").getChild("title");
-                newVersion = child.getUnescapedBody();
-
+                newVersion = Updates.findLatestRelease(root);
                 updateAvailable = Updates.isUpdateAvailable(Version.VERSION, newVersion);
             } catch (Throwable t) {
                 // Errors might be due to missing internet connection.
@@ -40,6 +39,27 @@ public class Updates {
 
     public static String getNewVersion() {
         return newVersion;
+    }
+
+    /**
+     * Find the name of the latest release.
+     *
+     * <p>This requires parsing the XML for all entries and checking the title as Travis might
+     * introduce pre-releases.
+     *
+     * @param root The root element of the XML file.
+     * @return The latest version number.
+     * @throws NumberFormatException No suitable version could be found.
+     */
+    private static String findLatestRelease(Element root) throws NumberFormatException {
+        final ArrayList<Element> entries = root.getChild("feed").getChildren("entry");
+        for (final Element entry : entries) {
+            final String title = entry.getChild("title").getUnescapedBody();
+            if (title != null && !title.isEmpty() && Character.isDigit(title.charAt(0))) {
+                return title;
+            }
+        }
+        throw new NumberFormatException("Could not find suitable version.");
     }
 
     /**

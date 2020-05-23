@@ -74,6 +74,22 @@ public class Element {
         return null;
     }
 
+    /**
+     * Get all the children with the given name.
+     *
+     * @param name To tag name to filter for.
+     * @return The children matching the given tag name.
+     */
+    public ArrayList<Element> getChildren(String name) {
+        final ArrayList<Element> matching = new ArrayList<>();
+        for (final Element element : children) {
+            if (element.is(name)) {
+                matching.add(element);
+            }
+        }
+        return matching;
+    }
+
     public void add(XMLAttribute attr) {
         attributes.add(attr);
     }

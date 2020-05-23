@@ -118,12 +118,20 @@ public class CopyLogDialog extends JFrame {
                                     new Runnable() {
                                         public void run() {
                                             try {
-                                                button.setVisible(false);
                                                 // contribute to shadow list
                                                 shadowList.postToShadowList(gc, oc);
 
+                                                // retrieve the new log text
+                                                log.setText(logPanel.getLogText());
+
                                                 // copy the log
                                                 OKAPI.postLog(User.getOKAPIUser(), oc, log);
+
+                                                // disable the button as this log must have been
+                                                // posted successfully (otherwise an exception would
+                                                // have occurred).
+                                                button.setVisible(false);
+
                                                 // remember that we copied the log so the user can
                                                 // not double post it by accident
                                                 logsCopied.add(log);

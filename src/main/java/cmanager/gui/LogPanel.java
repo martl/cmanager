@@ -15,7 +15,7 @@ public class LogPanel extends javax.swing.JPanel {
         lblAuthor.setText(log.getAuthor());
         lblType.setText(log.getTypeStr());
 
-        editorLog.setContentType("text/html");
+        // editorLog.setContentType("text/html");
         editorLog.setText(log.getText());
 
         editorLog.addComponentListener(
@@ -46,8 +46,12 @@ public class LogPanel extends javax.swing.JPanel {
         lblAuthor.setText("User");
         lblType.setText("Found it");
 
-        editorLog.setContentType("text/html");
+        // editorLog.setContentType("text/html");
         editorLog.setText("Log text");
+    }
+
+    public String getLogText() {
+        return editorLog.getText();
     }
 
     /**
